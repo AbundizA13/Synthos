@@ -1,8 +1,8 @@
-#ifndef nexus
-#define nexus
+#ifndef SYNTHOS_NEXUS_H
+#define SYNTHOS_NEXUS_H
 
 typedef enum token_type{    
-    EOF,   //Tipos de Token
+    TOK_EOF,   //Tipos de Token
     NUM, 
     VAR,
     EXP,
@@ -12,7 +12,7 @@ typedef enum token_type{
     DIV,
     R_PAR,
     L_PAR,
-    DOT
+    UNK
 } token_type;
 /*
 typedef enum{
@@ -22,7 +22,8 @@ typedef enum{
 
 typedef struct{         //Token
     token_type tipo;
-    char content[10];
+    char* content;
+    //char content[10];
 } token;
 
 typedef struct Token_Node{          //Nodos de Token
@@ -52,5 +53,7 @@ Token_Node* parseF(token** tokens);
 Token_Node* parseT(token** tokens);
 Token_Node* parseE(token** tokens);
 void printTree(Token_Node* node);
+void freeTokens(token* tList, int total);
+int reallocCharPtr(char** ptr, int len, int* cap, int totalTokens, token* tList);
 
 #endif

@@ -1,6 +1,7 @@
 #include "nexus.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*1. Funciones recursivas
   1.1. Crea un Token Node en el primer token
@@ -74,6 +75,29 @@ void printTree(Token_Node* node){
   printf(")");
 }
 
+token createOpToken(char operator){
+  token t;
+  memset(&t,0,sizeof(t));
+  //t.content[0] = operator;
+  //t.content[1] = '\0';
+  t.content = NULL;
+  switch(operator){
+    case '+':
+      t.tipo = SUM;
+      break;
+    case '-':
+      t.tipo = RES;
+      break;
+    case '*':
+      t.tipo = MULT;
+      break;
+    case '/':
+      t.tipo = DIV;
+      break;
+  }
+  return t;
+}
+
 Token_Node* parseF(token** tokens){
   if(isPrimary(**tokens)){
     Token_Node* newNode = malloc(sizeof(Token_Node));
@@ -133,14 +157,32 @@ Token_Node* parseT(token** tokens){
       c->right = b;
       bindChildren(c);
       a = c;
+    }else if(isPrimary(**tokens)){
+      Token_Node* b = parseF(tokens);
+      if(b == NULL){
+        freeTree(a);
+        return NULL;
+      }
+      Token_Node* c = malloc(sizeof(Token_Node));
+      if(c == NULL){
+        freeTree(a);
+        freeTree(b);
+        return NULL;
+      }
+      c->father = NULL;
+      c->token = createOpToken('*');
+      c->left = a;
+      c->right = b;
+      bindChildren(c);
+      a = c;
     }else return a;
   }
-}
+}       // 1 + 5y
 
 Token_Node* parseE(token** tokens){ 
   Token_Node* a = parseT(tokens); //Se consume primer token e índice aumenta
   if(a == NULL) return NULL;
-  while((**tokens).tipo != EOF){  
+  while((**tokens).tipo != TOK_EOF){  
     if((**tokens).tipo == SUM){ //Mirando si el próximo token es suma 
       token op = **tokens;
       nextToken(tokens);
@@ -160,7 +202,6 @@ Token_Node* parseE(token** tokens){
       c->left = a;
       c->right = b;
       bindChildren(c);
-      printf("");
       a = c;
     }else if((**tokens).tipo == RES){
       token op = **tokens;

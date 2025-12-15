@@ -8,9 +8,14 @@ int main(){
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     token tokens[20];
-    int totaltokens;
-    char input[30];
-    printf("Dame una expresión para ser reconocida: "); fgets(input, 30, stdin);
+    int totaltokens, c, len=0, cap=0;
+    char* input = NULL;//char input[30];
+    printf("Dame una expresión para ser reconocida: "); //fgets(input, 30, stdin);
+    while((c = getchar()) != EOF && c != '\0'){
+        reallocCharPtr(&input, len, &cap, 0, tokens);
+        input[len++] = c;
+    }
+    input[len] = '\0';
     char *p = input;
     totaltokens = getExpressionTokens(input,tokens);
     printf("Se detectó %d token(s) en '",totaltokens);
@@ -38,6 +43,7 @@ int main(){
         printTree(root);
     }
     freeTree(root);
+    freeTokens(tokens,totaltokens);
     printf("\n\tGracias por usar Synthos :p.");
     return 0;
     

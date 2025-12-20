@@ -94,6 +94,18 @@ token createOpToken(char operator){
     case '/':
       t.tipo = DIV;
       break;
+    case '^':
+      t.tipo = EXP;
+      break;
+    case '(':
+      t.tipo = L_PAR;
+      break;
+    case ')':
+      t.tipo = R_PAR;
+      break;
+    case '\0':
+      t.tipo = TOK_EOF;
+      break;
   }
   return t;
 }

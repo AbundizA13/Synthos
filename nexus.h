@@ -43,7 +43,7 @@ typedef struct{         //Término
 
     //FUNCIONES
 
-int getExpressionTokens(char expresion[30], token* tokens_temp); //Obtener Tokens a partir de un input de tipo string.
+int getExpressionTokens(char expresion[30], token** tokens_temp); //Obtener Tokens a partir de un input de tipo string.
 const char* getTokenType(token_type type); //Devuelve un string con la abreviatura del tipo de token introducido.
 void freeTree(Token_Node* node);
 int isPrimary(token token);
@@ -55,5 +55,6 @@ Token_Node* parseE(token** tokens);
 void printTree(Token_Node* node);
 void freeTokens(token* tList, int total);
 int reallocCharPtr(char** ptr, int len, int* cap, int totalTokens, token* tList);
+token createOpToken(char operator);
 
 #endif

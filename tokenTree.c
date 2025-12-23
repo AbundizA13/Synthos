@@ -50,6 +50,14 @@ void printTree(Token_Node* node){
   if(isPrimary(node->token)){
     printf("%s",node->token.content);
     return;
+  }else if(!isPrimary(node->token) && node->left == NULL && node->right != NULL){
+    if(node->token.tipo == RES){
+      printf("(-(");
+      printTree(node->right);
+      printf("))");
+      return;
+    }
+
   }
   // Si es un operador, imprime: (izq OP der)
   printf("(");
@@ -119,6 +127,22 @@ Token_Node* parseF(token** tokens){
     newNode->right = NULL;
     nextToken(tokens);
     return newNode;
+  }else if((**tokens).tipo == RES){
+    token op = **tokens;
+    nextToken(tokens);
+    Token_Node* b = parseF(tokens);
+    if(b == NULL) return NULL;
+    Token_Node* a = malloc(sizeof(Token_Node));
+    if(a == NULL){
+      freeTree(b);  
+      return NULL;
+    }
+    a->father = NULL;
+    a->left = NULL;
+    a->right = b;
+    a->token = op;
+    bindChildren(a);
+    return a;
   }else{
     printf("Unknown token in parseF(); '%s'",getTokenType((**tokens).tipo));
     return NULL;
@@ -192,7 +216,7 @@ Token_Node* parseT(token** tokens){
 }       // 1 + 5y
 
 Token_Node* parseE(token** tokens){ 
-  Token_Node* a = parseT(tokens); //Se consume primer token e índice aumenta
+  Token_Node* a = parseT(tokens); //IMPORTANTE: Se CONSUME primer token y aumenta índice.
   if(a == NULL) return NULL;
   while((**tokens).tipo != TOK_EOF){  
     if((**tokens).tipo == SUM){ //Mirando si el próximo token es suma 

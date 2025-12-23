@@ -68,8 +68,7 @@ void storeToken(token t, int* strCap, int strLen, token** tList){
     }
 }
 
-int getExpressionTokens(char expresion[30], token** tokens_temp){
-    char *p = expresion;
+int getExpressionTokens(char* p, token** tokens_temp){
     int tListLen = 0, tListCap = 0; //Contador del espacio en lista de tokens.
     while(*p != '\0' && *p != '\n'){
         if(isdigit((unsigned char)*p)){

@@ -34,7 +34,9 @@ int isPrimary(token token){
   else return 0;
 }
 void nextToken(token **tokens){
-  (*tokens)++;
+  //(*tokens)++;
+  if(tokens == NULL || *tokens == NULL) return;
+  if((**tokens).tipo != TOK_EOF) (*tokens)++;
 }
 void bindChildren(Token_Node* father){
   if(father->left != NULL){
@@ -45,16 +47,19 @@ void bindChildren(Token_Node* father){
   }
 }
 void printTree(Token_Node* node){
-  if(node == NULL) return;
+  if(node == NULL){
+    printf("(ERR)");
+    return;
+  } 
   // Si es un nodo primario (NUM o VAR), imprime directamente
   if(isPrimary(node->token)){
     printf("%s",node->token.content);
     return;
   }else if(!isPrimary(node->token) && node->left == NULL && node->right != NULL){
     if(node->token.tipo == RES){
-      printf("(-(");
+      printf("(-");
       printTree(node->right);
-      printf("))");
+      printf(")");
       return;
     }
 
@@ -75,6 +80,9 @@ void printTree(Token_Node* node){
       break;
     case DIV:
       printf(" / ");
+      break;
+    case EXP:
+      printf(" ^ ");
       break;
     default:
       printf(" ? ");
@@ -143,6 +151,20 @@ Token_Node* parseF(token** tokens){
     a->token = op;
     bindChildren(a);
     return a;
+  }else if((**tokens).tipo == SUM){
+    nextToken(tokens);
+    return parseF(tokens);
+  }else if((**tokens).tipo == L_PAR){
+    nextToken(tokens);
+    Token_Node* a = parseE(tokens);
+    if(a == NULL) return NULL;
+    if((**tokens).tipo == R_PAR){
+      nextToken(tokens);
+      return a;
+    }else{
+      printf("Invalid Syntax, ')' expected...");
+      return NULL;
+    } 
   }else{
     printf("Unknown token in parseF(); '%s'",getTokenType((**tokens).tipo));
     return NULL;
@@ -194,6 +216,24 @@ Token_Node* parseT(token** tokens){
       bindChildren(c);
       a = c;
     }else if(isPrimary(**tokens)){
+      Token_Node* b = parseF(tokens);
+      if(b == NULL){
+        freeTree(a);
+        return NULL;
+      }
+      Token_Node* c = malloc(sizeof(Token_Node));
+      if(c == NULL){
+        freeTree(a);
+        freeTree(b);
+        return NULL;
+      }
+      c->father = NULL;
+      c->token = createOpToken('*');
+      c->left = a;
+      c->right = b;
+      bindChildren(c);
+      a = c;
+    }else if((**tokens).tipo == L_PAR){
       Token_Node* b = parseF(tokens);
       if(b == NULL){
         freeTree(a);

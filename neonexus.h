@@ -64,6 +64,13 @@ class Lexer{
         void tokenizarParentesis();
     };
 
+class Parser{
+    private:
+        vector<token> tokens;
+    public:
+        Parser(vector<token> tokens);
+};
+
 void esperarENTER();
 
 #endif

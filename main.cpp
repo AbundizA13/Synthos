@@ -28,15 +28,20 @@ int main(){
 
     /*
     cout << '\n' << expresion;
-
     esperarENTER();*/
-    Lexer lexer(expresion);
-    vector<token> tokens;
-    tokens = lexer.tokenizar();
+
+        /* LEXER */
+    Lexer lexer(expresion); //Construcción de clase 'Lexer', con el input como parámetro
+    vector<token> tokens; //Contenedor de tokens para el lexer
+    tokens = lexer.tokenizar(); //lexer.tokenizar() rellena el contenedor de tokens
     
+        /* IMPRESIÓN DE TOKENS*/
     for(int i=0;i<tokens.size();i++){
         cout<< "(T_#"<<i<<"): "<<tokens[i].contenido<<"\n";
     }
+
+        /* PARSER */
+    Parser parser(tokens); //Construcción de clase 'Parser'
 
     return 0;
 }

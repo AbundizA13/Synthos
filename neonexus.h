@@ -32,10 +32,10 @@ typedef enum tipo_token{
     R_PAR,
     L_PAR,
     UNK
-} tipoTkn;
+} tipoToken;
 
 typedef struct token{
-    tipoTkn tipo;
+    tipoToken tipo;
     string contenido;
 } Token;
 
@@ -64,11 +64,32 @@ class Lexer{
         void tokenizarParentesis();
     };
 
+struct Nodo{
+    Nodo* der;
+    Nodo* izq;
+    Nodo* padre;
+    token token;
+
+    Nodo(Token t, Nodo* a, Nodo* b)
+        : token(t), izq(a), der(b), padre(nullptr){}
+};
+
 class Parser{
     private:
         vector<token> tokens;
+        int indice;
+        void avanzar();
+        bool actualEsTokenPrimario();
+        Nodo* parseTerm();
+        Nodo* parsePower();
+        Nodo* parseFactor();
+        Nodo* trinodo(Nodo* a, Nodo* b, token op); //Parsea tres tokens en una estructura trinodo
+        bool actualEsTokenOperador();
+        void unirHijos(Nodo* padre);
     public:
         Parser(vector<token> tokens);
+        Nodo* parseExpression();
+        
 };
 
 void esperarENTER();

@@ -4,3 +4,19 @@
 PERROS
 
 Y ESTA MERMA?
+
+<td width="250">
+
+<img src="[docs/logo.png](https://github.com/user-attachments/assets/1521ce64-5688-420b-88e7-631b74d0a412)">
+
+
+</td>
+
+<td>
+
+Aquí puedes escribir todo el texto que quieras sobre la imagen.
+
+</td>
+
+</tr>
+</table>

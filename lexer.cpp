@@ -39,7 +39,7 @@ void Lexer::tokenizarVariable(){
 }
 bool Lexer::esOperador(){
     char actual = carActual();
-    return actual == '+' || actual == '-' || actual == '*' || actual == '/';
+    return actual == '+' || actual == '-' || actual == '*' || actual == '/' || actual == '^';
 }
 void Lexer::tokenizarSuma(){
     string operador(1,carActual());
@@ -69,6 +69,13 @@ void Lexer::tokenizarDiv(){
     this->tokens.push_back(t);
     avanzar();
 }
+void Lexer::tokenizarExp(){
+    string operador(1,carActual());
+
+    token t = {tipo_token::EXP,operador};
+    this->tokens.push_back(t);
+    avanzar();
+}
 void Lexer::tokenizarOperador(){
     switch(carActual()){
         case '+':
@@ -82,6 +89,9 @@ void Lexer::tokenizarOperador(){
             break;
         case '/':
             tokenizarDiv();
+            break;
+        case '^':
+            tokenizarExp();
             break;
     }
 }
@@ -121,7 +131,7 @@ vector<Token> Lexer::tokenizar(){
         }else if(esParentesis()){
             tokenizarParentesis();
         }else{
-            cout<< Color::highlight_negativo<<"\n[ERROR] Se intentó tokenizar un carácter desconocido \""<<actual<<"\".\n";
+            cout<< Color::hl_negativo1<<"\n[ERROR] Se intentó tokenizar un carácter desconocido \""<<actual<<"\".\n";
             avanzar();
         }
 

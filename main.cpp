@@ -42,6 +42,19 @@ int main(){
 
         /* PARSER */
     Parser parser(tokens); //Construcción de clase 'Parser'
+    parser.parseExpression();
+    Nodo* raiz = parser.raiz;
+        /* IMPRIMIR AST */
+    if(raiz != nullptr){
+        cout<<Color::hl_positivo1<<"\nImpresión de AST:\n";
+        parser.imprimirAST(raiz);
+    }
+
+
+        /* MENSAJE DESPEDIDA */
+    cout<<Color::hl_positivo2<<"\n\nGracias por utilizar Synthos :)";
+    esperarENTER();
+
 
     return 0;
 }
@@ -50,7 +63,7 @@ int main(){
 
 
 void esperarENTER(){ //Agregar cin.ignore() antes de la función, en caso de tener '\n' en el buffer
-    cout <<Color::highlight_positivo<<"\n\nENTER "
+    cout <<Color::hl_positivo2<<"\n\nENTER "
     <<R<<"para continuar.";
 
     cin.get();

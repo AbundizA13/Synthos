@@ -7,7 +7,7 @@ Y ESTA MERMA?
 
 <td width="250">
 
-<img src="(https://github.com/user-attachments/assets/1521ce64-5688-420b-88e7-631b74d0a412)">
+<img src="https://github.com/user-attachments/assets/1521ce64-5688-420b-88e7-631b74d0a412">
 
 
 </td>

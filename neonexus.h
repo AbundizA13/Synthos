@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 namespace Color{
@@ -97,6 +98,25 @@ class Parser{
         Nodo* parseExpression();
         void imprimirAST(Nodo* nodo);
         
+};
+
+struct Variable{ //Dentro de un mapa que ya contiene el string de la variable
+    //string var;
+    double valor;
+    bool constante;
+    Variable(double val, bool constante)
+        : valor(val), constante(constante){}
+};
+
+class Evaluator{
+    private:
+        size_t indice;
+        vector<token> tokens;
+        unordered_map<string, Variable> variables; 
+    public:
+        Evaluator(vector<token> tokens);
+        void escanearVariables();
+
 };
 
 void esperarENTER();

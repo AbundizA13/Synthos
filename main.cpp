@@ -35,6 +35,10 @@ int main(){
     vector<token> tokens; //Contenedor de tokens para el lexer
     tokens = lexer.tokenizar(); //lexer.tokenizar() rellena el contenedor de tokens
     
+        /* EVALUATOR */
+    Evaluator evaluator(tokens);
+    evaluator.escanearVariables();
+
         /* IMPRESIÓN DE TOKENS*/
     for(int i=0;i<tokens.size();i++){
         cout<< "(T_#"<<i<<"): "<<tokens[i].contenido<<"\n";

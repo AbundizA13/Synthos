@@ -2,7 +2,7 @@
 
 <p align="center">
 SYNTHOS<br>
-Algebra Parsing Engine<br>
+Mathematical Expression Parsing Engine<br>
 Version 2.0.4
 </p>
 
@@ -10,12 +10,12 @@ Version 2.0.4
 <img src="img/s_synthos.png">
 </td>
 
-Synthos is a LL(1) parser designed to create multiple Abstract Syntax Threes (AST) for algebraic expressions, on its actual version, it can do:
+Synthos is a LL(1) parser designed to create an Abstract Syntax Tree (AST) for algebraic expressions. Currently, synthos supports:
 
-» Tokenize an expression from a string.
-» Parse a group of tokens using LL(1) algorithm into an AST.
-» Get all symbols (mathematical variables) and assing a value to them.
-» Evaluate the AST replacing the symbols values.
+- Tokenization of an expression from a string.<br>
+- Parsing a group of tokens using LL(1) algorithm into an AST.<br>
+- Recognizing all symbols (mathematical variables) and asking values to assign.<br>
+- Evaluating the AST, after replacing symbols values.
 
 +---------------+
 

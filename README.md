@@ -9,15 +9,8 @@ Version 2.0.4
 <td width="250">
 
 <img src="img/s_synthos.png">
+<img width="885" height="211" alt="image" src="https://github.com/user-attachments/assets/468579e9-f8cd-413c-b5c4-e7133c0ee770" />
 
 
 </td>
 
-<td>
-
-Aquí puedes escribir todo el texto que quieras sobre la imagen.
-
-</td>
-
-</tr>
-</table>

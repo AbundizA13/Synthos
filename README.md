@@ -1,9 +1,8 @@
 <img width="1200" height="300" alt="banner_synthos" src="img/banner_synthos.png" />
-# Synthos
 
-PERROS
-
-Y ESTA MERMA?
+SYNTHOS
+Algebra Parsing Engine
+Version 2.0.4
 
 <td width="250">
 

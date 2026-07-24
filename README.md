@@ -7,10 +7,16 @@ Version 2.0.4
 </p>
 
 <td width="250">
-
 <img src="img/s_synthos.png">
-<img width="885" height="211" alt="image" src="https://github.com/user-attachments/assets/468579e9-f8cd-413c-b5c4-e7133c0ee770" />
-
-
 </td>
 
+Synthos is a LL(1) parser designed to create multiple Abstract Syntax Threes (AST) for algebraic expressions, on its actual version, it can do:
+
+» Tokenize an expression from a string.
+» Parse a group of tokens using LL(1) algorithm into an AST.
+» Get all symbols (mathematical variables) and assing a value to them.
+» Evaluate the AST replacing the symbols values.
+
++---------------+
+
+Synthos IS under active development.

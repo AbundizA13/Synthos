@@ -6,9 +6,8 @@ Mathematical Expression Parsing Engine<br>
 Version 2.0.4
 </p>
 
-<td width="250">
-<img src="img/s_synthos.png">
-</td>
+<img width="1021" height="579" alt="image" src="https://github.com/user-attachments/assets/a4bbb9fb-9807-4285-9b6f-64d86ee3782c" />
+
 
 Synthos is a LL(1) parser designed to create an Abstract Syntax Tree (AST) for algebraic expressions. Currently, synthos supports:
 

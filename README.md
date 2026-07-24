@@ -1,10 +1,10 @@
 <img width="1200" height="300" alt="banner_synthos" src="img/banner_synthos.png" />
 
-<titulo align="center">
+<p align="center">
 SYNTHOS<br>
 Algebra Parsing Engine<br>
 Version 2.0.4
-</titulo>
+</p>
 
 <td width="250">
 

@@ -22,6 +22,7 @@ int main(){
 
     imprimirLogo();
     cout <<Color::input_principal<<"\n[INPUT] "
+    //<<Color::input_secundario<<"Give me an expression to be processed: "<<R;
     <<Color::input_secundario<<"Dame una expresión para ser reconocida: "<<R;
     string expresion;
     getline(cin, expresion);
@@ -37,11 +38,20 @@ int main(){
     
         /* EVALUATOR */
     Evaluator evaluator(tokens);
-    evaluator.escanearVariables();
+    evaluator.escanearVariables(); //Variables guardadas en evaluator.variables
+    unordered_map<string, Variable> variables = evaluator.variables;
+    if(variables.empty()){
+        cout << Color::hl_positivo1<<"\nNo se hallaron variables en la expresión.\n\n";
+    }else{
+        cout << Color::hl_positivo1<<"\nSe detectaron "<<variables.size()<<" variables en la expresión.\n\n";
+    }
+
 
         /* IMPRESIÓN DE TOKENS*/
-    for(int i=0;i<tokens.size();i++){
-        cout<< "(T_#"<<i<<"): "<<tokens[i].contenido<<"\n";
+    size_t tamanoTokens = tokens.size();
+    cout<<Color::hl_positivo2<<"Tokens reconocidos ("<<tamanoTokens<<"):\n";
+    for(int i=0;i<tamanoTokens;i++){
+        cout<<Color::hl_positivo0<< "["<<i<<"]: "<<Color::hl_positivo1<<tokens[i].contenido<<"\n";
     }
 
         /* PARSER */
@@ -50,13 +60,13 @@ int main(){
     Nodo* raiz = parser.raiz;
         /* IMPRIMIR AST */
     if(raiz != nullptr){
-        cout<<Color::hl_positivo1<<"\nImpresión de AST:\n";
+        cout<<Color::hl_positivo2<<"\nImpresión de AST:\n";
         parser.imprimirAST(raiz);
     }
 
 
         /* MENSAJE DESPEDIDA */
-    cout<<Color::hl_positivo2<<"\n\nGracias por utilizar Synthos :)";
+    cout<<Color::hl_positivo2<<"\n\nGracias por apoyar a este proyecto :)";
     esperarENTER();
 
 

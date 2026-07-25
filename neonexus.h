@@ -18,12 +18,13 @@ namespace Color{
     const string menu_principal = "\x1b[38;5;222m"; //Color principal del logo
     const string menu_secundario = "\x1b[38;5;109m"; //Color secundario del logo
     //IMPRESIÓN DE MENSAJES
+    const string hl_positivo0 = "\x1b[38;5;65m";
     const string hl_positivo1 = "\x1b[38;5;108m";
     const string hl_positivo2 = "\x1b[38;5;71m";
     const string hl_negativo1 = "\x1b[38;5;174m";
-    const string AST_par = "\x1b[38;5;66m";
-    const string AST_prim = "\x1b[38;5;159m";
-    const string AST_op = "\x1b[38;5;35m";
+    const string AST_par = "\x1b[38;5;96m";
+    const string AST_prim = "\x1b[38;5;139m";
+    const string AST_op = "\x1b[38;5;182m";
 }
 
 typedef enum tipo_token{
@@ -111,10 +112,10 @@ struct Variable{ //Dentro de un mapa que ya contiene el string de la variable
 class Evaluator{
     private:
         size_t indice;
-        vector<token> tokens;
-        unordered_map<string, Variable> variables; 
+        vector<token> tokens; 
     public:
         Evaluator(vector<token> tokens);
+        unordered_map<string, Variable> variables;
         void escanearVariables();
 
 };

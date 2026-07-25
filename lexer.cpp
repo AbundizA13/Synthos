@@ -12,6 +12,7 @@ Lexer::Lexer(string texto){
 };
 void Lexer::avanzar(){indice++;};
 char Lexer::carActual(){
+    if(!indiceDentroRango()) return '\0';
     return expresion[indice];
 }
 bool Lexer::indiceDentroRango(){

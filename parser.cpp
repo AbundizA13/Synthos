@@ -5,7 +5,9 @@
 using namespace Color;
 
 Parser::Parser(vector<token> tokens){
-    this->tokens = tokens;
+    this->tokens = std::move(tokens);
+    this->indice = 0;
+    this->raiz = nullptr;
 }
 
 
@@ -92,7 +94,7 @@ Nodo* Parser::parseFactor(){
         avanzar();
         Nodo* a = parseExpression();
         if(a == nullptr) return nullptr;
-        if(tokens[indice].tipo == R_PAR){
+        if(indice < tokens.size() && tokens[indice].tipo == R_PAR){
             avanzar();
             return a;
         }else{
@@ -178,6 +180,7 @@ bool Parser::actualEsTokenPrimario(){
 }
 
 bool Parser::actualEsTokenOperador(){
+    if(indice >= tokens.size()) return false;
     token t = tokens[indice];
     if(t.tipo == SUM || t.tipo == RES || t.tipo == MULT || t.tipo == DIV || t.tipo == EXP){
         return true;

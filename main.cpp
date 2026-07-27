@@ -63,7 +63,18 @@ int main(){
         cout<<Color::hl_positivo2<<"\nImpresión de AST:\n";
         parser.imprimirAST(raiz);
     }
+    /*
+    int opcion = -1;
+    cout<<Color::hl_positivo2<<"¿Desea evaluar la expresión ingresada?\n[1] Sí\t[0] No\n";
+    while(opcion > -1 && opcion < 2){
+        cin >> opcion;
+        cin.ignore();
+    }
 
+    if(opcion){
+
+    }*/
+    
 
         /* MENSAJE DESPEDIDA */
     cout<<Color::hl_positivo2<<"\n\nGracias por apoyar a este proyecto :)";

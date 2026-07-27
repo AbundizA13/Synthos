@@ -6,10 +6,10 @@
 using namespace std;
 
 
-Lexer::Lexer(string texto){
-    this->expresion = texto;
-    this->indice = 0;
-};
+Lexer::Lexer(const string& texto)
+    : expresion(texto), indice(0)
+    {}
+
 void Lexer::avanzar(){indice++;};
 char Lexer::carActual(){
     if(!indiceDentroRango()) return '\0';
@@ -42,59 +42,27 @@ bool Lexer::esOperador(){
     char actual = carActual();
     return actual == '+' || actual == '-' || actual == '*' || actual == '/' || actual == '^';
 }
-void Lexer::tokenizarSuma(){
-    string operador(1,carActual());
-
-    token t = {tipo_token::SUM,operador};
-    this->tokens.push_back(t);
-    avanzar();
-}
-void Lexer::tokenizarResta(){
-    string operador(1,carActual());
-
-    token t = {tipo_token::RES,operador};
-    this->tokens.push_back(t);
-    avanzar();
-}
-void Lexer::tokenizarMult(){
-    string operador(1,carActual());
-
-    token t = {tipo_token::MULT,operador};
-    this->tokens.push_back(t);
-    avanzar();
-}
-void Lexer::tokenizarDiv(){
-    string operador(1,carActual());
-    
-    token t = {tipo_token::DIV,operador};
-    this->tokens.push_back(t);
-    avanzar();
-}
-void Lexer::tokenizarExp(){
-    string operador(1,carActual());
-
-    token t = {tipo_token::EXP,operador};
-    this->tokens.push_back(t);
-    avanzar();
-}
 void Lexer::tokenizarOperador(){
+    string operador(1,carActual());
+    token t;
     switch(carActual()){
         case '+':
-            tokenizarSuma();
+            t = {SUM,operador};
             break;
         case '-':
-            tokenizarResta();
+            t = {RES,operador};
             break;
         case '*':
-            tokenizarMult();
+            t = {MULT,operador};
             break;
         case '/':
-            tokenizarDiv();
+            t = {DIV,operador};
             break;
         case '^':
-            tokenizarExp();
-            break;
+            t = {EXP,operador};
     }
+    tokens.push_back(t);
+    avanzar();
 }
 bool Lexer::esParentesis(){
     char actual = carActual();

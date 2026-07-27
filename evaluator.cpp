@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <stdexcept>
 
 using namespace Color;
 
@@ -26,4 +28,37 @@ void Evaluator::escanearVariables(){
         indice++;
     }
     return;
+}
+
+void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables){
+    if(variables.empty()){
+        return;
+    }
+    for(auto& var : variables){ //Ciclo que recorre cada elemento del mapa
+        const string& nombre = var.first;
+        Variable& contenido = var.second;
+        double valor;
+        string entrada;
+        while(1){
+            cout<<texto_base<<"Dame valor para la variable '"<<nombre<<"': ";
+            getline(cin,entrada);
+            try{
+                size_t posConversion = 0; //Posición en la que acabó la conversión
+                valor = stod(entrada, &posConversion);
+
+                if(posConversion != entrada.length()){
+                    cout<<hl_positivo0<<"\n\nIgnorando caracteres adicionales después del valor capturado.\n\n";
+                }
+            }catch(const invalid_argument& e){
+                cout<<hl_negativo1<<"\n\nERROR, por favor introducir un valor decimal válido.\n\n";
+                continue;
+            }catch(const out_of_range& e){
+                cout<<hl_negativo1<<"\n\nERROR, el valor introducido es demasiado alto.\n\n";
+                continue;
+            }
+            break;
+        }
+
+        contenido.valor = valor;
+    }
 }

@@ -52,7 +52,7 @@ class Lexer{
         vector<Token> tokens;
 
     public:
-        Lexer(string texto);
+        Lexer(const string& texto);
         vector<token> tokenizar();
         void avanzar();
         char carActual(); //Obtiene el carácter actual en base al índice
@@ -63,11 +63,6 @@ class Lexer{
         void tokenizarNumero();
         void tokenizarVariable();
         void tokenizarOperador();
-            void tokenizarSuma();
-            void tokenizarResta();
-            void tokenizarMult();
-            void tokenizarDiv();
-            void tokenizarExp();
         void tokenizarParentesis();
     };
 
@@ -117,6 +112,7 @@ class Evaluator{
         Evaluator(vector<token> tokens);
         unordered_map<string, Variable> variables;
         void escanearVariables();
+        void asignarValorVariables(unordered_map<string,Variable>& variables);
 
 };
 

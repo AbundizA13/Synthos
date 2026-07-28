@@ -1,9 +1,11 @@
 #include "neonexus.h"
 //#include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
 #include <windows.h>
 #include <string>
+#include <cmath>
 
 
 
@@ -67,7 +69,15 @@ int main(){
         evaluator.asignarValorVariables(variables);
 
         resultado = evaluator.evaluarAST(raiz,variables);
-        cout<<Color::hl_positivo2<<"\n\nResultado: "<<Color::hl_positivo0<<resultado<<".\n";
+        cout<<Color::hl_positivo2<<"\n\nResultado: "<<Color::hl_positivo0;
+        
+        if(abs(resultado) <= 0.00001){
+            if(abs(resultado) < 0.000000000001){
+                cout<<resultado<<fixed<<setprecision(20)<<" ("<<resultado<<").\n";
+            }else cout<<resultado<<fixed<<setprecision(11)<<" ("<<resultado<<").\n";
+        }else{
+            cout<<resultado<<".\n";
+        }
     }
     //debug_imprimirValorVariables(variables);
 

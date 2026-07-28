@@ -20,7 +20,7 @@ bool Lexer::indiceDentroRango(){
 }
 void Lexer::tokenizarNumero(){
     string numero;
-    while(indiceDentroRango() && isdigit(carActual())){
+    while(indiceDentroRango() && (isdigit(carActual()) || carActual()=='.')){
         numero += carActual();
         avanzar();
     }

@@ -60,14 +60,16 @@ int main(){
         cout<<Color::hl_positivo2<<"\nImpresión de AST:\n";
         parser.imprimirAST(raiz);
     }
-    
     int opcion = preguntarEvaluacion();
-
-    /*
-    if(opcion){ //SÍ se desea evaluar
-
-    }*/
+    double resultado = 0.0;
     
+    if(opcion){ //SÍ se desea evaluar
+        evaluator.asignarValorVariables(variables);
+
+        resultado = evaluator.evaluarAST(raiz,variables);
+        cout<<Color::hl_positivo2<<"\n\nResultado: "<<Color::hl_positivo0<<resultado<<".\n";
+    }
+    //debug_imprimirValorVariables(variables);
 
         /* MENSAJE DESPEDIDA */
     cout<<Color::hl_positivo2<<"\n\nGracias por apoyar a este proyecto :)";

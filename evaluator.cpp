@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include <cmath>
 
 using namespace Color;
 
@@ -61,4 +62,63 @@ void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables)
 
         contenido.valor = valor;
     }
+}
+
+double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variables){
+    if(nodo == nullptr){
+        cout<<hl_negativo1<<"\nSe intentó procesar un nodo inexistente.\n"<<R;
+        return 0.0;
+    }
+    token t = nodo->token;
+    if(t.tipo == NUM){
+        return stod(t.contenido);
+    }
+
+    if(t.tipo == VAR){
+        string variable = t.contenido;
+
+        auto iterador = variables.find(variable);
+        if(iterador != variables.end()){ //Se encontró la variable
+                Variable var = iterador->second;
+                return var.valor;
+        }
+        cout<<hl_negativo1<<"\nERROR INTERNO\nNo se encontró la variable actual en el mapa de valores\n";
+        return 0.0;
+    }
+
+    if(esOperador(t)){
+        double izquierdo = 0.0, derecho = 0.0;
+        if(nodo->izq != nullptr) izquierdo = evaluarAST(nodo->izq, variables);
+        if(nodo->der != nullptr) derecho = evaluarAST(nodo->der, variables);
+        switch(t.tipo){
+            case SUM: 
+                cout<<"("<<izquierdo<<" + "<<derecho<<")";
+                return izquierdo+derecho;
+            case RES:
+                if(nodo->izq == nullptr){
+                    cout<<"(-"<<derecho<<")";
+                    return -derecho;
+                }
+                cout<<"("<<izquierdo<<" - "<<derecho<<")";
+                return izquierdo - derecho;
+            case MULT: 
+                cout<<"("<<izquierdo<<" * "<<derecho<<")";
+                return izquierdo*derecho;
+            case DIV: 
+                cout<<"("<<izquierdo<<" / "<<derecho<<")";
+                return izquierdo/derecho; //AGREGAR VALIDACIONES SEMÁNTICAS (DIVISIÓN ENTRE 0)
+            case EXP: 
+                cout<<"("<<izquierdo<<" ^ "<<derecho<<")";
+                return pow(izquierdo,derecho);
+        }
+    }
+    cout<<hl_negativo1<<"\nERROR INTERNO\nSe intentó evaluar un operador descconocido.\n"<<R;
+    return 0.0;
+}
+
+bool Evaluator::esOperador(token t){
+    tipoToken tipo = t.tipo;
+    if(tipo == SUM || tipo == RES || tipo == MULT || tipo == DIV || tipo == EXP){
+        return true;
+    }else return false;
 }

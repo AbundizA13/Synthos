@@ -87,11 +87,11 @@ class Parser{
         int indice;
         void avanzar();
         bool actualEsTokenPrimario();
+        bool actualEsTokenOperador();
         Nodo* parseTerm();
         Nodo* parsePower();
         Nodo* parseFactor();
         Nodo* trinodo(Nodo* a, Nodo* b, token op); //Parsea tres tokens en una estructura trinodo
-        bool actualEsTokenOperador();
         void unirHijos(Nodo* padre);
     public:
         Nodo* raiz;
@@ -112,12 +112,14 @@ struct Variable{ //Dentro de un mapa que ya contiene el string de la variable
 class Evaluator{
     private:
         size_t indice;
-        vector<token> tokens; 
+        vector<token> tokens;
+        bool esOperador(token t);
     public:
         Evaluator(vector<token> tokens);
         unordered_map<string, Variable> variables;
         void escanearVariables();
         void asignarValorVariables(unordered_map<string,Variable>& variables);
+        double evaluarAST(Nodo* raiz, unordered_map<string,Variable>& variables);
 
 };
 

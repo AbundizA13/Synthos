@@ -28,10 +28,16 @@ void imprimirLogo(){
 
 int preguntarEvaluacion(){
     int opcion = -1;
-    cout<<Color::hl_positivo2<<"¿Desea evaluar la expresión ingresada?\n[1] Sí\t[0] No\n";
-    while(opcion > -1 && opcion < 2){
+    cout<<Color::hl_positivo2<<"\n\n¿Desea evaluar la expresión ingresada?\n[1] Sí\t[0] No\n";
+    while(opcion < 0 || opcion > 1){
         cin >> opcion;
         cin.ignore();
     }
     return opcion;
 }
+/*
+void debug_imprimirValorVariables(unordered_map<string,Variable>& variables){
+    for(auto variable : variables){
+        cout<<variable.first<<": "<<variable.second.valor;
+    }
+}*/

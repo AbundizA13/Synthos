@@ -6,6 +6,11 @@
 #include <unordered_map>
 using namespace std;
 
+#define R Color::texto_base
+#define M Color::menu_marco
+#define P Color::menu_principal
+#define S Color::menu_secundario
+
 namespace Color{
 
     const string texto_base = "\x1b[39m";
@@ -116,6 +121,12 @@ class Evaluator{
 
 };
 
+//FUNCIONES INDEPENDIENTES
+
+/*OUTPUT*/
+void imprimirLogo();
 void esperarENTER();
+int preguntarEvaluacion();
+
 
 #endif

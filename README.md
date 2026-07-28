@@ -3,7 +3,7 @@
 <p align="center">
 SYNTHOS<br>
 Mathematical Expression Parsing Engine<br>
-Version 2.0.4
+Version 2.1.0
 </p>
 
 ---

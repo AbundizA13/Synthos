@@ -36,6 +36,23 @@ int preguntarEvaluacion(){
     }
     return opcion;
 }
+
+string Mensaje::variables_encontradas(int n){
+    return hl_positivo1+"\nSe detectaron "+to_string(n)+" variables en la expresión.\n\n"+R;
+}
+
+string Mensaje::tokens_reconocidos(size_t n){
+    return hl_positivo2+"Tokens reconocidos ("+to_string(n)+"):\n"+R;
+}
+
+string Mensaje::token_individual(int i, const string& contenido){
+    return hl_positivo0+"["+to_string(i)+"]: "+hl_positivo1+contenido+"\n";
+}
+
+string Mensaje::pedir_valor_variable(const string& nombre){
+    return texto_base+"Dame valor para la variable '"+nombre+"': "+texto_secundario;
+}
+
 /*
 void debug_imprimirValorVariables(unordered_map<string,Variable>& variables){
     for(auto variable : variables){

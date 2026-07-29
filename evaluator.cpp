@@ -1,5 +1,6 @@
 #include "neonexus.h"
 #include "syncolors.h"
+#include "messages.h"
 #include <unordered_map>
 #include <iostream>
 #include <vector>
@@ -8,6 +9,7 @@
 #include <cmath>
 
 using namespace Color;
+using namespace std;
 
 /*AGREGAR REFERENCIAS A VARIABLES EN VEZ DE COPIAS*/
 
@@ -19,7 +21,7 @@ Evaluator::Evaluator(vector<token> tokens):
     
 
 void Evaluator::escanearVariables(){
-    if(tokens.empty()){cout<<hl_negativo1<<"Error léxico"; return;}
+    if(tokens.empty()){cout<<Mensaje::error_tokensNulos; return;}
 
     while(indice < tokens.size()){
         const token& actual = tokens[indice];
@@ -42,20 +44,20 @@ void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables)
         double valor;
         string entrada;
         while(1){
-            cout<<texto_base<<"Dame valor para la variable '"<<nombre<<"': ";
+            cout<<Mensaje::pedir_valor_variable(nombre);
             getline(cin,entrada);
             try{
                 size_t posConversion = 0; //Posición en la que acabó la conversión
                 valor = stod(entrada, &posConversion);
 
                 if(posConversion != entrada.length()){
-                    cout<<hl_positivo0<<"\n\nIgnorando caracteres adicionales después del valor capturado.\n\n";
+                    cout<<Mensaje::ignorando_caracteres;
                 }
             }catch(const invalid_argument& e){
-                cout<<hl_negativo1<<"\n\nERROR, por favor introducir un valor decimal válido.\n\n";
+                cout<<Mensaje::valor_invalido;
                 continue;
             }catch(const out_of_range& e){
-                cout<<hl_negativo1<<"\n\nERROR, el valor introducido es demasiado alto.\n\n";
+                cout<<Mensaje::valor_muyAlto;
                 continue;
             }
             break;
@@ -67,7 +69,7 @@ void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables)
 
 double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variables){
     if(nodo == nullptr){
-        cout<<hl_negativo1<<"\nSe intentó procesar un nodo inexistente.\n"<<R;
+        cout<<Mensaje::nodo_inexistente;
         return 0.0;
     }
     token t = nodo->token;
@@ -83,7 +85,7 @@ double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variable
                 Variable var = iterador->second;
                 return var.valor;
         }
-        cout<<hl_negativo1<<"\nERROR INTERNO\nNo se encontró la variable actual en el mapa de valores\n";
+        cout<<Mensaje::variable_no_en_mapa;
         return 0.0;
     }
 
@@ -113,7 +115,7 @@ double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variable
                 return pow(izquierdo,derecho);
         }
     }
-    cout<<hl_negativo1<<"\nERROR INTERNO\nSe intentó evaluar un operador descconocido.\n"<<R;
+    cout<<Mensaje::operador_desconocido;
     return 0.0;
 }
 

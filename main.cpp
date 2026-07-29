@@ -59,7 +59,7 @@ int main(){
     Nodo* raiz = parser.raiz;
         /* IMPRIMIR AST */
     if(raiz != nullptr){
-        cout<<Color::hl_positivo2<<"\nImpresión de AST:\n";
+        cout<<Mensaje::impresion_AST;
         parser.imprimirAST(raiz);
     }
     int opcion = preguntarEvaluacion();
@@ -69,7 +69,7 @@ int main(){
         evaluator.asignarValorVariables(variables);
 
         resultado = evaluator.evaluarAST(raiz,variables);
-        cout<<Color::hl_positivo2<<"\n\nResultado: "<<Color::hl_positivo0;
+        cout<<Mensaje::impresion_resultado;
         
         if(abs(resultado) <= 0.00001){
             if(abs(resultado) < 0.000000000001){
@@ -82,7 +82,7 @@ int main(){
     //debug_imprimirValorVariables(variables);
 
         /* MENSAJE DESPEDIDA */
-    cout<<Color::hl_positivo2<<"\n\nGracias por apoyar a este proyecto :)";
+    cout<<Mensaje::thankyou;
     esperarENTER();
 
 

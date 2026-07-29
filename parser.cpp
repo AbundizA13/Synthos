@@ -1,5 +1,6 @@
 #include "neonexus.h"
 #include "syncolors.h"
+#include "messages.h"
 #include <vector>
 #include <iostream>
 
@@ -11,6 +12,19 @@ Parser::Parser(vector<token> tokens){
     this->raiz = nullptr;
 }
 
+Parser::~Parser(){ //Destructor que libera el AST completo
+    liberarAST(this->raiz);
+    this->raiz = nullptr;
+}
+
+void Parser::liberarAST(Nodo* nodo){
+    if(nodo == nullptr){
+        return;
+    }
+    liberarAST(nodo->izq);
+    liberarAST(nodo->der);
+    delete nodo;
+}
 
 Nodo* Parser::parseExpression(){
     Nodo* a = parseTerm();
@@ -99,11 +113,11 @@ Nodo* Parser::parseFactor(){
             avanzar();
             return a;
         }else{
-            cout<<Color::hl_negativo1<<"Error de sintaxis, Se esperaba ')'.";
+            cout<<Mensaje::err_parentesis_abierto;
             return nullptr;
         }
     }else{
-        cout<<Color::hl_negativo1<<"Token desconocido en función 'parseF();'";
+        cout<<Mensaje::err_token_desconocido_parser;
         return nullptr;
     }
 }
@@ -114,7 +128,7 @@ bool esTokenPrimario(token t){
 
 void Parser::imprimirAST(Nodo* nodo){
     if(nodo == nullptr){
-        cout<<AST_par<<"("<<hl_negativo1<<"ERR"<<AST_par<<")";
+        cout<<AST_par<<"("<<Mensaje::impresion_token_desconocido<<AST_par<<")";
         return;
     }
     if(esTokenPrimario(nodo->token)){

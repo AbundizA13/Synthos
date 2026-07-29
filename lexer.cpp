@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "neonexus.h"
 #include "syncolors.h"
+#include "messages.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ void Lexer::tokenizarNumero(){
                 numero += carActual();
                 esDecimal = true;
             }else{ //La constante ya tenía un punto decimal procesado
-                cout<<Color::hl_advertencia1<<"\n\n\t! ADVERTENCIA !\nSe detectaron +1 puntos decimales en una constante.\n"<<R;
+                cout<<Mensaje::adv_decimal_duplicado;
             }
         }else{
             break;
@@ -114,10 +115,9 @@ vector<Token> Lexer::tokenizar(){
         }else if(esParentesis()){
             tokenizarParentesis();
         }else{
-            cout<< Color::hl_negativo1<<"\n[ERROR] Se intentó tokenizar un carácter desconocido \""<<actual<<"\".\n";
+            cout<<Mensaje::err_token_desconocido(actual);
             avanzar();
         }
-
     }
     return this->tokens;
 };

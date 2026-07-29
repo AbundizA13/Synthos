@@ -51,13 +51,13 @@ void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables)
                 valor = stod(entrada, &posConversion);
 
                 if(posConversion != entrada.length()){
-                    cout<<Mensaje::ignorando_caracteres;
+                    cout<<Mensaje::adv_ignorando_caracteres;
                 }
             }catch(const invalid_argument& e){
-                cout<<Mensaje::valor_invalido;
+                cout<<Mensaje::err_valor_invalido;
                 continue;
             }catch(const out_of_range& e){
-                cout<<Mensaje::valor_muyAlto;
+                cout<<Mensaje::err_valor_muyAlto;
                 continue;
             }
             break;
@@ -69,7 +69,7 @@ void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables)
 
 double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variables){
     if(nodo == nullptr){
-        cout<<Mensaje::nodo_inexistente;
+        cout<<Mensaje::err_nodo_inexistente;
         return 0.0;
     }
     token t = nodo->token;
@@ -85,7 +85,7 @@ double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variable
                 Variable var = iterador->second;
                 return var.valor;
         }
-        cout<<Mensaje::variable_no_en_mapa;
+        cout<<Mensaje::err_variable_no_en_mapa;
         return 0.0;
     }
 
@@ -115,7 +115,7 @@ double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variable
                 return pow(izquierdo,derecho);
         }
     }
-    cout<<Mensaje::operador_desconocido;
+    cout<<Mensaje::err_operador_desconocido;
     return 0.0;
 }
 

@@ -67,9 +67,11 @@ class Parser{
         Nodo* parseFactor();
         Nodo* trinodo(Nodo* a, Nodo* b, token op); //Parsea tres tokens en una estructura trinodo
         void unirHijos(Nodo* padre);
+        void liberarAST(Nodo* nodo);
     public:
         Nodo* raiz;
         Parser(vector<token> tokens);
+        ~Parser(); //DESTRUCTOR
         Nodo* parseExpression();
         void imprimirAST(Nodo* nodo);
         

@@ -53,6 +53,11 @@ string Mensaje::pedir_valor_variable(const string& nombre){
     return texto_base+"Dame valor para la variable '"+nombre+"': "+texto_secundario;
 }
 
+string Mensaje::err_token_desconocido(const char& actual){
+    return tag_errorInterno+"Se intentó tokenizar un caracter desconocido \""+actual+"\".\n";
+}
+
+
 /*
 void debug_imprimirValorVariables(unordered_map<string,Variable>& variables){
     for(auto variable : variables){

@@ -1,4 +1,6 @@
 #include "neonexus.h"
+#include "syncolors.h"
+#include "messages.h"
 //#include <stdio.h>
 #include <iostream>
 #include <iomanip>
@@ -20,9 +22,7 @@ int main(){
     system("cls");
 
     imprimirLogo();
-    cout <<Color::input_principal<<"\n[INPUT] "
-    //<<Color::input_secundario<<"Give me an expression to be processed: "<<R;
-    <<Color::input_secundario<<"Dame una expresión para ser reconocida: "<<R;
+    cout << Mensaje::pedir_expresion;
     string expresion;
     getline(cin, expresion);
 
@@ -40,17 +40,17 @@ int main(){
     evaluator.escanearVariables(); //Variables guardadas en evaluator.variables
     unordered_map<string, Variable> variables = evaluator.variables;
     if(variables.empty()){
-        cout << Color::hl_positivo1<<"\nNo se hallaron variables en la expresión.\n\n";
+        cout << Mensaje::variables_noEncontradas;
     }else{
-        cout << Color::hl_positivo1<<"\nSe detectaron "<<variables.size()<<" variables en la expresión.\n\n";
+        cout << Mensaje::variables_encontradas(variables.size());
     }
 
 
         /* IMPRESIÓN DE TOKENS*/
     size_t tamanoTokens = tokens.size();
-    cout<<Color::hl_positivo2<<"Tokens reconocidos ("<<tamanoTokens<<"):\n";
+    cout<<Mensaje::tokens_reconocidos(tamanoTokens);
     for(int i=0;i<tamanoTokens;i++){
-        cout<<Color::hl_positivo0<< "["<<i<<"]: "<<Color::hl_positivo1<<tokens[i].contenido<<"\n";
+        cout<<Mensaje::token_individual(i,tokens[i].contenido);
     }
 
         /* PARSER */
@@ -73,7 +73,7 @@ int main(){
         
         if(abs(resultado) <= 0.00001){
             if(abs(resultado) < 0.000000000001){
-                cout<<resultado<<fixed<<setprecision(20)<<" ("<<resultado<<").\n";
+                cout<<resultado<<fixed<<setprecision(17)<<" ("<<resultado<<").\n";
             }else cout<<resultado<<fixed<<setprecision(11)<<" ("<<resultado<<").\n";
         }else{
             cout<<resultado<<".\n";

@@ -1,13 +1,14 @@
 #include <iostream>
 #include "neonexus.h"
+#include "syncolors.h"
+#include "messages.h"
 
 
 
 using namespace std;
 
 void esperarENTER(){ //Agregar cin.ignore() antes de la función, en caso de tener '\n' en el buffer
-    cout <<Color::hl_positivo2<<"\n\nENTER "
-    <<R<<"para continuar.";
+    cout << Mensaje::esperando_enter;
 
     cin.get();
 }
@@ -28,7 +29,7 @@ void imprimirLogo(){
 
 int preguntarEvaluacion(){
     int opcion = -1;
-    cout<<Color::hl_positivo2<<"\n\n¿Desea evaluar la expresión ingresada?\n[1] Sí\t[0] No\n";
+    cout<<Mensaje::preguntar_evaluacion;
     while(opcion < 0 || opcion > 1){
         cin >> opcion;
         cin.ignore();

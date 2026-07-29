@@ -1,7 +1,8 @@
 #include <string>
 #include <iostream>
 #include <ctype.h>
-#include "neonexus.H"
+#include "neonexus.h"
+#include "syncolors.h"
 
 using namespace std;
 
@@ -20,8 +21,21 @@ bool Lexer::indiceDentroRango(){
 }
 void Lexer::tokenizarNumero(){
     string numero;
-    while(indiceDentroRango() && (isdigit(carActual()) || carActual()=='.')){
-        numero += carActual();
+    bool esDecimal = false;
+
+    while(indiceDentroRango()){
+        if(isdigit(carActual())){
+            numero += carActual();
+        }else if(carActual() == '.'){
+            if(!(esDecimal)){ //No se ha detectado un punto en la constante
+                numero += carActual();
+                esDecimal = true;
+            }else{ //La constante ya tenía un punto decimal procesado
+                cout<<Color::hl_advertencia1<<"\n\n\t! ADVERTENCIA !\nSe detectaron +1 puntos decimales en una constante.\n"<<R;
+            }
+        }else{
+            break;
+        }
         avanzar();
     }
 

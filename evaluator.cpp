@@ -1,4 +1,5 @@
 #include "neonexus.h"
+#include "syncolors.h"
 #include <unordered_map>
 #include <iostream>
 #include <vector>

@@ -43,8 +43,9 @@ void Lexer::tokenizarNumero(){
     token t = {tipo_token::NUM, numero};
     this->tokens.push_back(t);
 }
-void Lexer::tokenizarVariable(){
-    string variable;
+
+void Lexer::tokenizarAlfanumerico(){
+    string letras;
     while(indiceDentroRango() && isalpha(carActual())){
         variable += carActual();
         avanzar();

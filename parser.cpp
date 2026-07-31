@@ -4,6 +4,14 @@
 #include <vector>
 #include <iostream>
 
+/*
+-2^2
+(-2)^2
+-2*3
+-2+3
+--2
+*/
+
 using namespace Color;
 
 Parser::Parser(vector<token> tokens){
@@ -54,7 +62,7 @@ Nodo* Parser::parseTerm(){
     Nodo* a = parsePower();
     if(a == nullptr) return nullptr;
     while(indice < tokens.size()){
-        if(actualEsTokenPrimario() || tokens[indice].tipo == L_PAR){ //MULTIPLICACIÓN IMPLICITA enc.
+        if((actualEsTokenPrimario() || tokens[indice].tipo == FUNC) || tokens[indice].tipo == L_PAR){ //MULTIPLICACIÓN IMPLICITA enc.
             Nodo* b = parsePower(); //Consume PARENTESIS ENTERO o TOKEN PRIMARIO y los multiplica
             if(b == nullptr) return nullptr;
             a = trinodo(a,b,{MULT});
@@ -97,7 +105,7 @@ Nodo* Parser::parseFactor(){
         return nuevoNodo;
     }else if(actual.tipo == RES){ //RESTA UNARIA
         avanzar();
-        Nodo* primario = parseFactor();
+        Nodo* primario = parsePower();
         if(primario == nullptr) return nullptr;
         Nodo* negacion = new Nodo(actual,nullptr,primario);
         unirHijos(negacion);
@@ -116,6 +124,22 @@ Nodo* Parser::parseFactor(){
             cout<<Mensaje::err_parentesis_abierto;
             return nullptr;
         }
+    }else if(actual.tipo == FUNC){
+        //token función guardado en actual
+        avanzar();
+        if(tokens[indice].tipo != L_PAR){
+            //AGREGAR MENSAJE DE ERROR.
+            return nullptr;
+        }
+        avanzar(); //Parentesis consumido
+        Nodo* argumento = parseExpression();
+        if(tokens[indice].tipo != R_PAR){
+            //AGREGAR MENSAJE DE ERROR.
+            return nullptr;
+        }
+        avanzar();
+        Nodo* funcion = new Nodo(actual,nullptr,argumento);
+        return funcion;
     }else{
         cout<<Mensaje::err_token_desconocido_parser;
         return nullptr;
@@ -136,10 +160,17 @@ void Parser::imprimirAST(Nodo* nodo){
         return;
     }
     if(nodo->izq == nullptr && nodo->der != nullptr){
-        if(nodo->token.tipo == RES){
+        token t = nodo->token;
+        if(t.tipo == RES){
             cout<<AST_par<<"("<<AST_op<<"-";
             imprimirAST(nodo->der);
             cout<<AST_par<<")";
+            return;
+        }
+        if(t.tipo == FUNC){
+            cout<<AST_par<<"("<<AST_func<<t.contenido<<AST_par<<"(";
+            imprimirAST(nodo->der);
+            cout<<AST_par<<"))";
             return;
         }
     }

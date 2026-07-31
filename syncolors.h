@@ -31,8 +31,9 @@ namespace Color{
     const string hl_advertencia0 = "\x1b[38;5;144m";
     const string hl_advertencia1 = "\x1b[38;5;186m";
     const string AST_par = "\x1b[38;5;96m";
-    const string AST_prim = "\x1b[38;5;139m";
+    const string AST_prim = "\x1b[38;5;133m";
     const string AST_op = "\x1b[38;5;182m";
+    const string AST_func = "\x1b[38;5;217m";
 }
 
 

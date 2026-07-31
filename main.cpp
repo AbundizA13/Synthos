@@ -21,6 +21,9 @@ int main(){
 
     system("cls");
 
+    //RUTINA PRINCIPAL MENU Y PETICIÓN DE RUTINA SECUNDARIA
+    //RUTINA_MENU();
+
     imprimirLogo();
     cout << Mensaje::pedir_expresion;
     string expresion;
@@ -71,7 +74,7 @@ int main(){
         resultado = evaluator.evaluarAST(raiz,variables);
         cout<<Mensaje::impresion_resultado;
         
-        if(abs(resultado) <= 0.00001){
+        if(abs(resultado) <= 0.00001 && abs(resultado) > 0){
             if(abs(resultado) < 0.000000000001){
                 cout<<resultado<<fixed<<setprecision(17)<<" ("<<resultado<<").\n";
             }else cout<<resultado<<fixed<<setprecision(11)<<" ("<<resultado<<").\n";

@@ -4,12 +4,13 @@
 #include "neonexus.h"
 #include "syncolors.h"
 #include "messages.h"
+#include "math_functions.h"
 
 using namespace std;
 
 
 Lexer::Lexer(const string& texto)
-    : expresion(texto), indice(0)
+    : expresion(texto), indice(0), funciones(obtenerFuncionesMatematicas())
     {}
 
 void Lexer::avanzar(){indice++;};
@@ -47,11 +48,18 @@ void Lexer::tokenizarNumero(){
 void Lexer::tokenizarAlfanumerico(){
     string letras;
     while(indiceDentroRango() && isalpha(carActual())){
-        variable += carActual();
+        letras += carActual();
         avanzar();
     }
 
-    token t = {tipo_token::VAR, variable};
+    /*CAMBIAR VARIABLE O FUNC A IDENTIFICADOR Y DEJAR QUE EL PARSER AJUSTE*/
+    if(funciones.find(letras) != funciones.end()){ //Es una función
+        token t = {tipo_token::FUNC,letras};
+        tokens.push_back(t);
+    }else tokenizarVariable(letras);
+}
+void Lexer::tokenizarVariable(string variable){ //Separar en dos funciones
+    token t = {tipo_token::VAR,variable};
     this->tokens.push_back(t);
 }
 bool Lexer::esOperador(){
@@ -108,7 +116,7 @@ vector<Token> Lexer::tokenizar(){
         if(isdigit(actual)){
             tokenizarNumero(); //cada método para tokenizar avanza consume y avanza indice
         }else if(isalpha(actual)){
-            tokenizarVariable();
+            tokenizarAlfanumerico();
         }else if(isspace(actual)){
             avanzar();
         }else if(esOperador()){

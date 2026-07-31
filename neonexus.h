@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <functional>
 using namespace std;
 
 typedef enum tipo_token{
@@ -16,6 +17,7 @@ typedef enum tipo_token{
     DIV,
     R_PAR,
     L_PAR,
+    FUNC,
     UNK
 } tipoToken;
 
@@ -29,6 +31,12 @@ class Lexer{
         string expresion;
         size_t indice;
         vector<Token> tokens;
+        void tokenizarAlfanumerico();
+        void tokenizarNumero();
+        void tokenizarVariable(string variable);
+        void tokenizarOperador();
+        void tokenizarParentesis();
+        unordered_map<string, function<double(double)>> funciones;
 
     public:
         Lexer(const string& texto);
@@ -38,11 +46,6 @@ class Lexer{
         bool indiceDentroRango();
         bool esOperador();
         bool esParentesis();
-        
-        void tokenizarNumero();
-        void tokenizarVariable();
-        void tokenizarOperador();
-        void tokenizarParentesis();
     };
 
 struct Nodo{
@@ -90,6 +93,7 @@ class Evaluator{
         size_t indice;
         vector<token> tokens;
         bool esOperador(token t);
+        unordered_map<string, function<double(double)>> funciones;
     public:
         Evaluator(vector<token> tokens);
         unordered_map<string, Variable> variables;
@@ -99,12 +103,14 @@ class Evaluator{
 
 };
 
+
 //FUNCIONES INDEPENDIENTES
 
 /*OUTPUT*/
 void imprimirLogo();
 void esperarENTER();
 int preguntarEvaluacion();
+string RUTINA_MENU();
 
 
 #endif

@@ -39,6 +39,8 @@ namespace Mensaje{
     const string esperando_enter = hl_positivo2+"\n\nENTER "+R+"para continuar.";
     const string preguntar_evaluacion = hl_positivo2+"\n\n¿Desea evaluar la expresión ingresada?\n[1] Sí\t[0] No\n"+R;
     string pedir_valor_variable(const string& nombre);
+    /*MENU*/
+    const string pedir_comando = hl_positivo2+"\nIntroducir comando para continuar ('help' para lista de comados): "+R;
 
     const string thankyou = hl_positivo2+"\n\nGracias por apoyar a este proyecto :)"+R;
 }   

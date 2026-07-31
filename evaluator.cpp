@@ -1,6 +1,7 @@
 #include "neonexus.h"
 #include "syncolors.h"
 #include "messages.h"
+#include "math_functions.h"
 #include <unordered_map>
 #include <iostream>
 #include <vector>
@@ -14,7 +15,7 @@ using namespace std;
 /*AGREGAR REFERENCIAS A VARIABLES EN VEZ DE COPIAS*/
 
 Evaluator::Evaluator(vector<token> tokens):
-    tokens(std::move(tokens)), indice(0), variables()
+    tokens(std::move(tokens)), indice(0), variables(), funciones(obtenerFuncionesMatematicas())
     {}
     //this->tokens = tokens;
     //this->indice = 0;
@@ -87,6 +88,15 @@ double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variable
         }
         cout<<Mensaje::err_variable_no_en_mapa;
         return 0.0;
+    }
+
+    if(t.tipo == FUNC){
+        if(nodo->der == nullptr){
+            //AGREGAR MENSAJE DE ERROR.
+            return 0.0;
+        }
+        double argumento = evaluarAST(nodo->der,variables);
+        return funciones[t.contenido](argumento);
     }
 
     if(esOperador(t)){

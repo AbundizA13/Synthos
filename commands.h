@@ -3,15 +3,16 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
 enum rutinasPrincipales{
+    salir,
     expresion,
     evaluar,
     simplificar,
     ayuda,
-    salir
 };
 
 struct Comando{
@@ -20,11 +21,14 @@ struct Comando{
     size_t args;
 };
 
-struct Parser_Comando{
+typedef struct Parser_Comando{
     rutinasPrincipales tipo; //Rutina principal del comando
     vector<string> argumentos;
     vector<string> configuraciones;
-};
+
+    Parser_Comando(rutinasPrincipales tipo)
+        : tipo(tipo){}
+}Comando_Parser;
 
 class CommandManager{
     private:
@@ -33,7 +37,9 @@ class CommandManager{
     public:
         CommandManager(const string& comando);
         Comando tokenizarComando();
-        Parser_Comando parsearComando();
+        Comando_Parser parsearComando();
 };
+
+
 
 #endif

@@ -1,6 +1,7 @@
 #include "commands.h"
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
 
@@ -28,5 +29,6 @@ Comando CommandManager::tokenizarComando(){
 }
 
 Parser_Comando CommandManager::parsearComando(){
-    //Se tokenizará en tu madre
+    comando;
+    Parser_Comando(0) perro;
 }

@@ -21,14 +21,11 @@ struct Comando{
     size_t args;
 };
 
-typedef struct Parser_Comando{
-    rutinasPrincipales tipo; //Rutina principal del comando
+struct Command_Invocation{
+    rutinasPrincipales rutina;
     vector<string> argumentos;
-    vector<string> configuraciones;
-
-    Parser_Comando(rutinasPrincipales tipo)
-        : tipo(tipo){}
-}Comando_Parser;
+    unordered_map<string, string> flags;
+};
 
 class CommandManager{
     private:
@@ -37,7 +34,7 @@ class CommandManager{
     public:
         CommandManager(const string& comando);
         Comando tokenizarComando();
-        Comando_Parser parsearComando();
+        Command_Invocation parsearComando();
 };
 
 

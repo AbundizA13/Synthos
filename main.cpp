@@ -22,9 +22,8 @@ int main(){
     system("cls");
 
     //RUTINA PRINCIPAL MENU Y PETICIÓN DE RUTINA SECUNDARIA
-    //RUTINA_MENU();
+    RUTINA_MENU();
 
-    imprimirLogo();
     cout << Mensaje::pedir_expresion;
     string expresion;
     getline(cin, expresion);

@@ -42,7 +42,10 @@ class CommandParser{
     private:
         Comando comando;
         size_t indice_argumentos;
+        CommandResult resultado;
         CommandResult parseRoutine();
+        CommandResult parseArguments();
+        bool tokenEsFlag(const string& token);
         /*Funciones recursivas de gramática comando*/
     public:
         CommandParser(const Comando& comando);

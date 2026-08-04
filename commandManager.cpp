@@ -42,7 +42,6 @@ CommandParser::CommandParser(const Comando& comando)
     : comando(comando), indice_argumentos(0){}
 
 CommandResult CommandParser::parseRoutine(){
-    CommandResult resultado;
     Command_Invocation invocacion;
     
     string rutina_cruda = comando.principal;
@@ -61,9 +60,28 @@ CommandResult CommandParser::parseRoutine(){
 
         }
         /*Rutina capturada correctamente*/
-        rutinasPrincipales rutina = iterador->second;
-        invocacion.rutina = rutina;
+    rutinasPrincipales rutina = iterador->second;
+    invocacion.rutina = rutina;
 
+    resultado.invocacion = invocacion;
+    parseArguments();
+
+    return resultado; //Después de no encontrar ningun error
+}
+
+CommandResult CommandParser::parseArguments(){
+    vector<string> tokens = comando.tokens;
+    while(indice_argumentos < tokens.size()){
+        if(!(tokenEsFlag(tokens[indice_argumentos]))){ //Mientras los tokens no sean flags, tratalas como argumentos.
+
+            continue;
+        }
+        /*Termina parseo de argumentos y comienzan las flags*/
         
-        
+    };
+}
+
+bool CommandParser::tokenEsFlag(const string& token){
+    if(token.size() > 2 && token[0] == '-' && token[1] == '-') return true;
+    return false;
 }

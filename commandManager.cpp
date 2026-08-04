@@ -18,7 +18,7 @@ Comando CommandManager::tokenizarComando(){
 
     while(ss >> palabra){
         if(args > 0){ //Argumento detectado
-            nuevoComando.argumentos.push_back(palabra);
+            nuevoComando.tokens.push_back(palabra);
         }else{ //Comando principal detectado
             nuevoComando.principal = palabra;
         }

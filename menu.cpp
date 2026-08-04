@@ -11,4 +11,6 @@ string RUTINA_MENU(){ //Impresión de logo Synthos y petición de rutina/comando
 
     CommandManager cmdManager(comando);
     Comando nuevoComando = cmdManager.tokenizarComando();
+    //Struct comando creado
+    
 }

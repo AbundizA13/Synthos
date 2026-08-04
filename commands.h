@@ -17,7 +17,7 @@ enum rutinasPrincipales{
 
 struct Comando{
     string principal;
-    vector<string> argumentos;
+    vector<string> tokens;
     size_t args;
 };
 
@@ -34,9 +34,14 @@ class CommandManager{
     public:
         CommandManager(const string& comando);
         Comando tokenizarComando();
-        Command_Invocation parsearComando();
+        //Command_Invocation parsearComando();
 };
 
-
+class CommandParser{
+    private:
+        /*Funciones recursivas de gramática comando*/
+    public:
+        CommandParser(const Comando& comando);
+};
 
 #endif

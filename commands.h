@@ -15,6 +15,8 @@ enum rutinasPrincipales{
     ayuda,
 };
 
+extern const unordered_map<string, rutinasPrincipales> mapaRutinas;
+
 struct Comando{
     string principal;
     vector<string> tokens;
@@ -30,7 +32,6 @@ struct Command_Invocation{
 class CommandManager{
     private:
         string texto;
-        Comando comando;
     public:
         CommandManager(const string& comando);
         Comando tokenizarComando();
@@ -39,9 +40,17 @@ class CommandManager{
 
 class CommandParser{
     private:
+        Comando comando;
+        size_t indice_argumentos;
+        CommandResult parseRoutine();
         /*Funciones recursivas de gramática comando*/
     public:
         CommandParser(const Comando& comando);
+};
+
+struct CommandResult{   
+    bool exito = true;
+    Command_Invocation invocacion;
 };
 
 #endif

@@ -5,12 +5,15 @@
 
 string RUTINA_MENU(){ //Impresión de logo Synthos y petición de rutina/comando al usuario.
     imprimirLogo();
-    cout << Mensaje::pedir_comando;
     string comando;
-    getline(cin, comando);
+    while(true){
 
-    CommandManager cmdManager(comando);
-    Comando nuevoComando = cmdManager.tokenizarComando();
+        cout << Mensaje::pedir_comando;
+        getline(cin, comando);
+
+        CommandResult resultado;
+        CommandManager cmdManager(comando);
+        Comando nuevoComando = cmdManager.tokenizarComando();
     //Struct comando creado
-    
+    }
 }

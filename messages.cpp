@@ -57,6 +57,10 @@ string Mensaje::err_token_desconocido(const char& actual){
     return tag_errorInterno+"Se intentó tokenizar un caracter desconocido \""+actual+"\".\n";
 }
 
+string Mensaje::err_rutina_desconocida(const string& rutina){
+    return tag_error+"Se desconoce la rutina \""+rutina+"\".\n\n"+R;
+}
+
 
 /*
 void debug_imprimirValorVariables(unordered_map<string,Variable>& variables){

@@ -46,7 +46,6 @@ CommandResult CommandParser::parseRoutine(){
     
     string rutina_cruda = comando.principal;
     if(rutina_cruda.empty()){
-        //AGREGAR MENSAJE DE ERROR.
         cout<<Mensaje::err_rutina_vacia;
         resultado.exito = false;
         return resultado;
@@ -79,20 +78,37 @@ void CommandParser::parseArguments(){
         string tokenActual = tokens[indice_argumentos];
         if(!(tokenEsFlag(tokenActual))){ //Mientras los tokens no sean flags, tratalas como argumentos.
             resultado.invocacion.argumentos.push_back(tokenActual);
+            indice_argumentos++;
             continue;
         }
         parseFlags();
-        break;
+        return;
     };
     return;
 }
 
 void CommandParser::parseFlags(){
     vector<string> tokens = comando.tokens;
-    cout << "\nFlags detectadas:\n";
-    while(indice_argumentos < tokens.size()){
-        cout << tokens[indice_argumentos] << "\n";
-        indice_argumentos++;
+    size_t tamano = tokens.size();
+    while(indice_argumentos < tamano){
+        //cout << tokens[indice_argumentos] << "\n";
+        pair<string, string> flag;
+        cout<<"\nCreando par de strings para flag.";
+        flag.first = tokens[indice_argumentos];
+        if((indice_argumentos+1) < tamano && !tokenEsFlag(tokens[indice_argumentos+1])){
+            cout << "\nSe detectó un flag con valor.\n";
+            /*Si queda al menos un argumento, y no es flag, se toma como valor del último flag*/
+            flag.second = tokens[indice_argumentos+1];
+            indice_argumentos += 2;
+        }else{
+            /*Si era otra flag, o ya no había espacio*/
+            cout << "\nSe detectó un flag sin valor.\n";
+            flag.second = "true";
+            indice_argumentos++;
+        }
+        cout << "\nGuardando flag <"<<flag.first<<", "<<flag.second<<">.";
+        cout << "Indice : ("<<indice_argumentos<<"/"<<tamano<<").\n";
+        resultado.invocacion.flags.emplace(flag);
     }
     return;
 }

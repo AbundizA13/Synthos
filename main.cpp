@@ -1,6 +1,7 @@
 #include "neonexus.h"
 #include "syncolors.h"
 #include "messages.h"
+#include "commands.h"
 //#include <stdio.h>
 #include <iostream>
 #include <iomanip>
@@ -20,7 +21,34 @@ int main(){
     system("cls");
 
     //RUTINA PRINCIPAL MENU Y PETICIÓN DE RUTINA SECUNDARIA
-    RUTINA_MENU();
+    Command_Invocation invocacion = RUTINA_MENU();
+
+    switch(invocacion.rutina){
+        case rutinasPrincipales::salir:
+            break;
+        
+        case rutinasPrincipales::expresion:
+
+            break;
+
+        case rutinasPrincipales::evaluar:
+
+            break;
+
+        case rutinasPrincipales::simplificar:
+
+            break;
+
+        case rutinasPrincipales::ayuda:
+        
+
+        /*Sin default porque no habrá más casos*/
+    }
+
+    
+
+
+
 
     cout << Mensaje::pedir_expresion;
     string expresion;
@@ -79,6 +107,8 @@ int main(){
             cout<<resultado<<".\n";
         }
     }
+  
+
     //debug_imprimirValorVariables(variables);
 
         /* MENSAJE DESPEDIDA */

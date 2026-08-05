@@ -1,6 +1,7 @@
 #ifndef SYNTHOS_NEXUS_H
 #define SYNTHOS_NEXUS_H
 
+#include "commands.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -110,7 +111,8 @@ class Evaluator{
 void imprimirLogo();
 void esperarENTER();
 int preguntarEvaluacion();
-void RUTINA_MENU();
+
+Command_Invocation RUTINA_MENU();
 
 
 #endif

@@ -38,22 +38,24 @@ class CommandManager{
         //Command_Invocation parsearComando();
 };
 
+struct CommandResult{   
+    bool exito = true;
+    Command_Invocation invocacion;
+};
+
 class CommandParser{
     private:
         Comando comando;
         size_t indice_argumentos;
         CommandResult resultado;
-        CommandResult parseRoutine();
-        CommandResult parseArguments();
+        void parseArguments();
+        void parseFlags();
         bool tokenEsFlag(const string& token);
-        /*Funciones recursivas de gramática comando*/
     public:
         CommandParser(const Comando& comando);
+        CommandResult parseRoutine();
 };
 
-struct CommandResult{   
-    bool exito = true;
-    Command_Invocation invocacion;
-};
+
 
 #endif

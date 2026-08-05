@@ -41,8 +41,9 @@ namespace Mensaje{
     string pedir_valor_variable(const string& nombre);
     /*MENU*/
     const string pedir_comando = hl_positivo2+"\nIntroducir comando para continuar ('help' para lista de comados): "+R;
-    const string err_rutina_vacia = tag_errorInterno+"Rutina vacía al entrar a CommandParser.\n\n"+R;
+    const string err_rutina_vacia = tag_errorInterno+"Rutina vacía al entrar a CommandParser. \nPor favor, introduce un comando válido.\n\n"+R;
     string err_rutina_desconocida(const string& rutina);
+    const string argumentos_vacios = hl_positivo1+"\nNo se detectaron argumentos en el comando ingresado.\n"+R;
 
     const string thankyou = hl_positivo2+"\n\nGracias por apoyar a este proyecto :)"+R;
 }   

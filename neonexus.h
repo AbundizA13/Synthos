@@ -110,7 +110,7 @@ class Evaluator{
 void imprimirLogo();
 void esperarENTER();
 int preguntarEvaluacion();
-string RUTINA_MENU();
+void RUTINA_MENU();
 
 
 #endif

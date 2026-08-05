@@ -3,7 +3,7 @@
 #include "messages.h"
 #include <iostream>
 
-string RUTINA_MENU(){ //Impresión de logo Synthos y petición de rutina/comando al usuario.
+void RUTINA_MENU(){ //Impresión de logo Synthos y petición de rutina/comando al usuario.
     imprimirLogo();
     string comando;
     while(true){
@@ -14,6 +14,14 @@ string RUTINA_MENU(){ //Impresión de logo Synthos y petición de rutina/comando
         CommandResult resultado;
         CommandManager cmdManager(comando);
         Comando nuevoComando = cmdManager.tokenizarComando();
-    //Struct comando creado
+        CommandParser parser(nuevoComando);
+        resultado = parser.parseRoutine();
+
+        if(!resultado.exito){
+            //Mensaje de error ya desplegado en la función correspondiente
+            continue;
+        }
+        Command_Invocation invocacion = resultado.invocacion;
+        break;
     }
 }

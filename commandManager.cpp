@@ -69,16 +69,32 @@ CommandResult CommandParser::parseRoutine(){
     return resultado; //Después de no encontrar ningun error
 }
 
-CommandResult CommandParser::parseArguments(){
+void CommandParser::parseArguments(){
+    if(comando.tokens.empty()){
+        cout << Mensaje::argumentos_vacios;
+        return;
+    }
     vector<string> tokens = comando.tokens;
     while(indice_argumentos < tokens.size()){
-        if(!(tokenEsFlag(tokens[indice_argumentos]))){ //Mientras los tokens no sean flags, tratalas como argumentos.
-
+        string tokenActual = tokens[indice_argumentos];
+        if(!(tokenEsFlag(tokenActual))){ //Mientras los tokens no sean flags, tratalas como argumentos.
+            resultado.invocacion.argumentos.push_back(tokenActual);
             continue;
         }
-        /*Termina parseo de argumentos y comienzan las flags*/
-        
+        parseFlags();
+        break;
     };
+    return;
+}
+
+void CommandParser::parseFlags(){
+    vector<string> tokens = comando.tokens;
+    cout << "\nFlags detectadas:\n";
+    while(indice_argumentos < tokens.size()){
+        cout << tokens[indice_argumentos] << "\n";
+        indice_argumentos++;
+    }
+    return;
 }
 
 bool CommandParser::tokenEsFlag(const string& token){

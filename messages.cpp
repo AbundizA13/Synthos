@@ -58,7 +58,7 @@ string Mensaje::err_token_desconocido(const char& actual){
 }
 
 string Mensaje::err_rutina_desconocida(const string& rutina){
-    return tag_error+"Se desconoce la rutina \""+rutina+"\".\n\n"+R;
+    return tag_error+"Se desconoce la rutina \""+rutina+"\".\nPor favor, introduce un comando válido.\n\n"+R;
 }
 
 

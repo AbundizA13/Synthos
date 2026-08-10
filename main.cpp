@@ -2,6 +2,7 @@
 #include "syncolors.h"
 #include "messages.h"
 #include "commands.h"
+#include "routines.h"
 //#include <stdio.h>
 #include <iostream>
 #include <iomanip>
@@ -10,46 +11,52 @@
 #include <string>
 #include <cmath>
 
-
-
 using namespace std;
 
 int main(){
-    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);    
     SetConsoleCP(CP_UTF8);
 
     system("cls");
 
-    //RUTINA PRINCIPAL MENU Y PETICIÓN DE RUTINA SECUNDARIA
-    Command_Invocation invocacion = RUTINA_MENU();
+    imprimirLogo();
 
-    switch(invocacion.rutina){
-        case rutinasPrincipales::salir:
-            break;
-        
-        case rutinasPrincipales::expresion:
-
-            break;
-
-        case rutinasPrincipales::evaluar:
-
-            break;
-
-        case rutinasPrincipales::simplificar:
-
-            break;
-
-        case rutinasPrincipales::ayuda:
-        
-
-        /*Sin default porque no habrá más casos*/
-    }
-
+    bool ejecutando = true;
+    Session session;
     
+    
+    
+    
+    //RUTINA PRINCIPAL MENU Y PETICIÓN DE RUTINA SECUNDARIA
+    while(ejecutando){
+        //Struct Command Invocation contiene información para la ejecución del próximo paso
+        Command_Invocation invocacion = RUTINA_MENU(); 
+        /* RUTINA_MENU es una función aislada que ejecuta
+        el proceso completo para requerir el comando al usuario */
 
+        //Cada case es un proceso distinto 
+        if(invocacion.rutina == rutinasPrincipales::expresion){
+                Expresion nueva = rutinaExpresion(invocacion);
+                session.agregarExpr(nueva);
+        }
+        switch(invocacion.rutina){
+            case rutinasPrincipales::salir:
+                ejecutando = false;
+                break;
+            case rutinasPrincipales::evaluar:
 
+                break;
 
+            case rutinasPrincipales::simplificar:
 
+                break;
+
+            case rutinasPrincipales::ayuda:
+            
+
+            /*Sin default porque no habrá más casos*/
+        }
+    }
     cout << Mensaje::pedir_expresion;
     string expresion;
     getline(cin, expresion);

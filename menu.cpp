@@ -4,7 +4,6 @@
 #include <iostream>
 
 Command_Invocation RUTINA_MENU(){ //Impresión de logo Synthos y petición de rutina/comando al usuario.
-    imprimirLogo();
     string comando;
     while(true){
 

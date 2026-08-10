@@ -15,15 +15,16 @@ using namespace std;
 /*AGREGAR REFERENCIAS A VARIABLES EN VEZ DE COPIAS*/
 
 Evaluator::Evaluator(vector<token> tokens):
-    tokens(std::move(tokens)), indice(0), variables(), funciones(obtenerFuncionesMatematicas())
+    tokens(std::move(tokens)), indice(0), funciones(obtenerFuncionesMatematicas())
     {}
     //this->tokens = tokens;
     //this->indice = 0;
     
 
-void Evaluator::escanearVariables(){
+unordered_map<string, Variable> Evaluator::escanearVariables(){
     if(tokens.empty()){cout<<Mensaje::error_tokensNulos; return;}
 
+    unordered_map<string, Variable> variables;
     while(indice < tokens.size()){
         const token& actual = tokens[indice];
         if(actual.tipo == VAR){
@@ -32,7 +33,7 @@ void Evaluator::escanearVariables(){
         }
         indice++;
     }
-    return;
+    return variables;
 }
 
 void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables){

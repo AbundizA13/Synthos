@@ -46,6 +46,9 @@ namespace Mensaje{
     const string argumentos_vacios = hl_positivo1+"\nNo se detectaron argumentos en el comando ingresado.\n"+R;
 
     const string thankyou = hl_positivo2+"\n\nGracias por apoyar a este proyecto :)"+R;
+
+    /*DEBUG*/
+    const string debug_sess_expr_agregada = hl
 }   
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef SYNTHOS_NEXUS_H
 #define SYNTHOS_NEXUS_H
 
-#include "commands.h"
+//#include "commands.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -97,11 +97,27 @@ class Evaluator{
         unordered_map<string, function<double(double)>> funciones;
     public:
         Evaluator(vector<token> tokens);
-        unordered_map<string, Variable> variables;
-        void escanearVariables();
+        //unordered_map<string, Variable> variables;
+        unordered_map<string, Variable> escanearVariables();
         void asignarValorVariables(unordered_map<string,Variable>& variables);
         double evaluarAST(Nodo* raiz, unordered_map<string,Variable>& variables);
 
+};
+
+struct Expresion{
+    string original;
+    Nodo* raiz;
+    unordered_map<string, Variable> variables;
+};
+
+
+class Session{ //Se encarga de almacenar varios AST, mapa de va
+    private:
+        void eliminar_AST(Nodo* nodo);
+    public:
+        unordered_map<string, Expresion> expresiones;
+        void agregarExpr(const Expresion& expresion);
+        ~Session();
 };
 
 

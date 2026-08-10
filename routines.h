@@ -2,8 +2,9 @@
 #define SYNTHOS_ROUTINES_H
 
 #include "commands.h"
+#include "neonexus.h"
 
-void rutinaExpresion(const Command_Invocation& invocacion);
+Expresion rutinaExpresion(const Command_Invocation& invocacion);
 
 
 #endif

@@ -47,7 +47,7 @@ class CommandParser{
     private:
         Comando comando;
         size_t indice_argumentos;
-        CommandResult resultado;
+        CommandResult resultado; //Utiliza CommandResult como clase privada para detección de errores
         void parseArguments();
         void parseFlags();
         bool tokenEsFlag(const string& token);

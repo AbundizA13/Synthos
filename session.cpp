@@ -19,7 +19,7 @@ void Session::eliminar_AST(Nodo* nodo){
     delete nodo;
 }
 
-void Session::agregarExpr(const Expresion& expresion){
-    expresiones.emplace(expresion.original, expresion);
+void Session::agregarExpr(const string& nombre, const Expresion& expresion){
+    expresiones.emplace(nombre, expresion);
     cout<<Mensaje::debug_sess_expr_agregada;
 }

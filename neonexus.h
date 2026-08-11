@@ -118,7 +118,7 @@ class Session{ //Se encarga de almacenar varios AST, mapa de va
         void eliminar_AST(Nodo* nodo);
     public:
         unordered_map<string, Expresion> expresiones;
-        void agregarExpr(const Expresion& expresion);
+        void agregarExpr(const string& nombre, const Expresion& expresion);
         ~Session();
 };
 

@@ -38,7 +38,8 @@ int main(){
         rutinasPrincipales rutina = invocacion.rutina;
         if(rutina == rutinasPrincipales::expresion){
             Expresion nueva = rutinaExpresion(invocacion);
-            session.agregarExpr(nueva);
+            string nombre;
+            session.agregarExpr(nombre, nueva);
         }else if(rutina == rutinasPrincipales::salir){
             ejecutando = false;
         }else if(rutina == rutinasPrincipales::evaluar){

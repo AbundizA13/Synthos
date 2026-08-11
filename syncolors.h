@@ -34,6 +34,9 @@ namespace Color{
     const string AST_prim = "\x1b[38;5;133m";
     const string AST_op = "\x1b[38;5;182m";
     const string AST_func = "\x1b[38;5;217m";
+    //DEBUG
+    const string hl_debug0 = "\x1b[38;5;73m";
+    const string hl_debug1 = "\x1b[38;5;30m";
 }
 
 

@@ -2,6 +2,8 @@
 #include "messages.h"
 #include "neonexus.h"
 #include <iostream> 
+#include <iomanip>
+#include <cmath>
 
 using namespace std;
 
@@ -18,9 +20,9 @@ Expresion rutinaExpresion(const Command_Invocation& invocacion){
     vector<token> tokens; //Vector de tokens
     tokens = lexer.tokenizar(); //Lexer devuelve vector de tokens relleno.
 
-    Evaluator evaluator(tokens); //Clase evaluator recibe tokens
+    Evaluator evaluator(tokens); //Clase evaluator recibe tokens y ejecuta escanearVariables()
     unordered_map<string, Variable> variables;
-    variables = evaluator.escanearVariables(); //Variables guardadas en evaluator.variables (cambiar a )
+    variables = evaluator.variables; //Variables guardadas en evaluator.variables (cambiar a )
     if(variables.empty()){
         cout << Mensaje::variables_encontradas;
     }else{
@@ -45,5 +47,31 @@ Expresion rutinaExpresion(const Command_Invocation& invocacion){
     }
 
     //Se asume que "raiz" no es nullptr, arreglar esto si aparece otro comportamiento.  
+    esperarENTER();
     return actual;
+}
+
+Expresion& requerirExpresion(unordered_map<string, Expresion>& expresiones){
+    /*SE DEBE AJUSTAR STRUCT EXPRESION Y DARLE UN NOMBRE A LAS EXPRESIONES
+    PARA PODER PEDIR NOMBRE DE EXPRESIÓN Y NO EL INPUT ENTERO*/
+}
+
+double rutinaEvaluarAST(const Expresion& expresion){
+    Evaluator evaluator(expresion);
+    evaluator.asignarValorVariables();
+
+    double resultado = 0.0;
+
+    resultado = evaluator.evaluarAST(expresion.raiz);
+    cout<<Mensaje::impresion_resultado;
+
+    if(abs(resultado) <= 0.00001 && abs(resultado) > 0){
+        if(abs(resultado) < 0.000000000001){
+            cout<<resultado<<fixed<<setprecision(17)<<" ("<<resultado<<").\n";
+        }else cout<<resultado<<fixed<<setprecision(11)<<" ("<<resultado<<").\n";
+    }else{
+        cout<<resultado<<".\n";
+    }
+    return; //cold
+    esperarENTER();
 }

@@ -89,20 +89,6 @@ struct Variable{ //Dentro de un mapa que ya contiene el string de la variable
         : valor(val), constante(constante){}
 };
 
-class Evaluator{
-    private:
-        size_t indice;
-        vector<token> tokens;
-        bool esOperador(token t);
-        unordered_map<string, function<double(double)>> funciones;
-    public:
-        Evaluator(vector<token> tokens);
-        //unordered_map<string, Variable> variables;
-        unordered_map<string, Variable> escanearVariables();
-        void asignarValorVariables(unordered_map<string,Variable>& variables);
-        double evaluarAST(Nodo* raiz, unordered_map<string,Variable>& variables);
-
-};
 
 struct Expresion{
     string original;
@@ -110,6 +96,22 @@ struct Expresion{
     unordered_map<string, Variable> variables;
 };
 
+class Evaluator{
+    private:
+        size_t indice;
+        vector<token> tokens;
+        bool esOperador(token t);
+        unordered_map<string, function<double(double)>> funciones;
+        Nodo* raiz;
+    public:
+        Evaluator(vector<token> tokens);
+        Evaluator(const Expresion& expresion);
+        unordered_map<string, Variable> variables;
+        void escanearVariables();
+        void asignarValorVariables();
+        double evaluarAST(Nodo* nodo);
+
+};
 
 class Session{ //Se encarga de almacenar varios AST, mapa de va
     private:
@@ -128,7 +130,6 @@ void imprimirLogo();
 void esperarENTER();
 int preguntarEvaluacion();
 
-Command_Invocation RUTINA_MENU();
 
 
 #endif

@@ -56,6 +56,6 @@ class CommandParser{
         CommandResult parseRoutine();
 };
 
-
+Command_Invocation RUTINA_MENU();
 
 #endif

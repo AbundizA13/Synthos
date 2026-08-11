@@ -13,6 +13,7 @@ namespace Mensaje{
     const string tag_error = hl_negativo1+"\n[ERROR] "+hl_negativo0;
     const string tag_errorInterno = hl_negativo1+"\n[ERROR INTERNO] "+hl_negativo0;
     const string tag_advertencia = hl_advertencia1+"\n[ADVERTENCIA] "+hl_advertencia0;
+    const string tag_debug = hl_debug1+"\n[DEBUG] "+hl_debug0;
     /*EVALUATOR*/
     const string variables_noEncontradas = hl_positivo1+"\nNo se hallaron variables en la expresión.\n\n"+R;
     string variables_encontradas(int n);
@@ -48,7 +49,7 @@ namespace Mensaje{
     const string thankyou = hl_positivo2+"\n\nGracias por apoyar a este proyecto :)"+R;
 
     /*DEBUG*/
-    const string debug_sess_expr_agregada = hl
+    const string debug_sess_expr_agregada = tag_debug+"Se agregó una expresión a la sesión actual";
 }   
 
 #endif

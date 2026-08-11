@@ -15,16 +15,21 @@ using namespace std;
 /*AGREGAR REFERENCIAS A VARIABLES EN VEZ DE COPIAS*/
 
 Evaluator::Evaluator(vector<token> tokens):
-    tokens(std::move(tokens)), indice(0), funciones(obtenerFuncionesMatematicas())
-    {}
+    tokens(std::move(tokens)), indice(0), funciones(obtenerFuncionesMatematicas()), raiz(nullptr)
+    {
+        escanearVariables();
+    }
     //this->tokens = tokens;
     //this->indice = 0;
+
+Evaluator::Evaluator(const Expresion& expresion):
+    funciones(obtenerFuncionesMatematicas()), raiz(expresion.raiz), variables(expresion.variables)
+    {}
     
 
-unordered_map<string, Variable> Evaluator::escanearVariables(){
+void Evaluator::escanearVariables(){
     if(tokens.empty()){cout<<Mensaje::error_tokensNulos; return;}
 
-    unordered_map<string, Variable> variables;
     while(indice < tokens.size()){
         const token& actual = tokens[indice];
         if(actual.tipo == VAR){
@@ -33,10 +38,10 @@ unordered_map<string, Variable> Evaluator::escanearVariables(){
         }
         indice++;
     }
-    return variables;
+    return;
 }
 
-void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables){
+void Evaluator::asignarValorVariables(){
     if(variables.empty()){
         return;
     }
@@ -69,7 +74,7 @@ void Evaluator::asignarValorVariables(unordered_map<string,Variable>& variables)
     }
 }
 
-double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variables){
+double Evaluator::evaluarAST(Nodo* nodo){
     if(nodo == nullptr){
         cout<<Mensaje::err_nodo_inexistente;
         return 0.0;
@@ -96,14 +101,14 @@ double Evaluator::evaluarAST(Nodo* nodo,unordered_map<string,Variable>& variable
             //AGREGAR MENSAJE DE ERROR.
             return 0.0;
         }
-        double argumento = evaluarAST(nodo->der,variables);
+        double argumento = evaluarAST(nodo->der);
         return funciones[t.contenido](argumento);
     }
 
     if(esOperador(t)){
         double izquierdo = 0.0, derecho = 0.0;
-        if(nodo->izq != nullptr) izquierdo = evaluarAST(nodo->izq, variables);
-        if(nodo->der != nullptr) derecho = evaluarAST(nodo->der, variables);
+        if(nodo->izq != nullptr) izquierdo = evaluarAST(nodo->izq);
+        if(nodo->der != nullptr) derecho = evaluarAST(nodo->der);
         switch(t.tipo){
             case SUM: 
                 cout<<"("<<izquierdo<<" + "<<derecho<<")";

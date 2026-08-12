@@ -61,6 +61,9 @@ string Mensaje::err_rutina_desconocida(const string& rutina){
     return tag_error+"Se desconoce la rutina \""+rutina+"\".\nPor favor, introduce un comando válido.\n\n"+R;
 }
 
+string Mensaje::expresiones_agregadas(size_t num){
+    return tag_debug+"Se detectaron "+std::to_string(num)+" expresiones.\n"+R;
+}
 
 /*
 void debug_imprimirValorVariables(unordered_map<string,Variable>& variables){

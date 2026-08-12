@@ -5,7 +5,8 @@
 #include "neonexus.h"
 
 Expresion rutinaExpresion(const Command_Invocation& invocacion);
-double rutinaEvaluarAST(const Expresion& expresion);
+void rutinaEvaluarAST(const Expresion& expresion);
+void requerirExpresion(unordered_map<string, Expresion>& expresiones, Expresion& actual);
 
 
 #endif

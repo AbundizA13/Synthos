@@ -51,12 +51,37 @@ Expresion rutinaExpresion(const Command_Invocation& invocacion){
     return actual;
 }
 
-Expresion& requerirExpresion(unordered_map<string, Expresion>& expresiones){
+void requerirExpresion(unordered_map<string, Expresion>& expresiones, Expresion& actual){
     /*SE DEBE AJUSTAR STRUCT EXPRESION Y DARLE UN NOMBRE A LAS EXPRESIONES
     PARA PODER PEDIR NOMBRE DE EXPRESIÓN Y NO EL INPUT ENTERO*/
+    size_t num_expresiones = expresiones.size();
+    cout<<Mensaje::expresiones_agregadas(num_expresiones);
+    string nombre;
+    while(true){
+        cout<<Mensaje::buscar_expresion;
+        getline(cin, nombre);
+        if(nombre.empty()){
+            actual.raiz = nullptr;
+            cout<<Mensaje::saliendo;
+            return;
+        }
+        
+        //Verificar si la expresión está en el mapa de expresiones
+        auto iterador = expresiones.find(nombre);
+        if(iterador == expresiones.end()){ //No se encontró la expresión
+            cout<<Mensaje::expresion_no_encontrada;
+            continue; //Seguir intentando
+        }
+        cout<<Mensaje::expresion_encontrada;
+        actual = iterador->second;
+        return;
+    }
+    
+
+
 }
 
-double rutinaEvaluarAST(const Expresion& expresion){
+void rutinaEvaluarAST(const Expresion& expresion){
     Evaluator evaluator(expresion);
     evaluator.asignarValorVariables();
 
@@ -72,6 +97,6 @@ double rutinaEvaluarAST(const Expresion& expresion){
     }else{
         cout<<resultado<<".\n";
     }
-    return; //cold
-    esperarENTER();
+    return;
 }
+

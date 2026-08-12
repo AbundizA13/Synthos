@@ -38,12 +38,22 @@ int main(){
         rutinasPrincipales rutina = invocacion.rutina;
         if(rutina == rutinasPrincipales::expresion){
             Expresion nueva = rutinaExpresion(invocacion);
+            cout<<Mensaje::pedir_nombre_expr;
             string nombre;
+            getline(cin, nombre);
             session.agregarExpr(nombre, nueva);
         }else if(rutina == rutinasPrincipales::salir){
             ejecutando = false;
         }else if(rutina == rutinasPrincipales::evaluar){
-            //rutinaEvaluarAST(); /*SE DEBE CONOCER LA FUNCION A EVALUAR DEL MAPA DE SESSION ()*/
+            //Hacer alguna validación en caso de no tener expresiones.
+            if(session.expresiones.empty()){
+                cout<<Mensaje::sin_expresiones;
+                continue;
+            }
+            Expresion actual;
+            requerirExpresion(session.expresiones, actual);
+            if(actual.raiz == nullptr) continue; //Devuelve al principio del menu
+            rutinaEvaluarAST(actual); /*SE DEBE CONOCER LA FUNCION A EVALUAR DEL MAPA DE SESSION ()*/
         }
             /*    break;
 

@@ -22,10 +22,12 @@ Parser::Parser(vector<token> tokens){
 }
 
 Parser::~Parser(){ //Destructor que libera el AST completo
-    liberarAST(this->raiz);
+    //no liberar aquí, session es responsable de limpiar los nodos
+    //liberarAST(this->raiz);
     this->raiz = nullptr;
 }
 
+/*
 void Parser::liberarAST(Nodo* nodo){
     if(nodo == nullptr){
         return;
@@ -33,7 +35,7 @@ void Parser::liberarAST(Nodo* nodo){
     liberarAST(nodo->izq);
     liberarAST(nodo->der);
     delete nodo;
-}
+}*/
 
 Nodo* Parser::parseExpression(){
     Nodo* a = parseTerm();

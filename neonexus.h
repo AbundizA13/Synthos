@@ -112,15 +112,15 @@ class Evaluator{
         size_t indice;
         vector<token> tokens;
         bool esOperador(token t);
-        unordered_map<string, function<double(double)>> funciones;
         Nodo* raiz;
     public:
         Evaluator(vector<token> tokens);
         Evaluator(const Expresion& expresion);
         unordered_map<string, Variable> variables;
+        unordered_map<string, function<double(double)>> funciones;
         void escanearVariables();
         void asignarValorVariables();
-        optional<double> evaluarAST(Nodo* nodo);
+        optional<double> evaluarAST(Nodo* nodo, ContextoEvaluator& contexto);
 
 };
 

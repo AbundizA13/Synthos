@@ -88,7 +88,8 @@ void rutinaEvaluarAST(const Expresion& expresion){
     evaluator.asignarValorVariables();
 
     //double resultado = 0.0;
-    auto res = evaluator.evaluarAST(expresion.raiz);
+    ContextoEvaluator contexto(evaluator.variables, evaluator.funciones);
+    auto res = evaluator.evaluarAST(expresion.raiz, contexto);
     if(!res.has_value()){
         cout<<Mensaje::err_evaluarAST;
         return;

@@ -76,12 +76,11 @@ void Evaluator::asignarValorVariables(){
     }
 }
 
-optional<double> Evaluator::evaluarAST(Nodo* nodo){
+optional<double> Evaluator::evaluarAST(Nodo* nodo, ContextoEvaluator& contexto){
     if(nodo == nullptr){
         cout<<Mensaje::err_nodo_inexistente;
         return nullopt;
     }
-    ContextoEvaluator contexto(variables,funciones);
     return nodo->evaluar(contexto);
 
     //Con eso debería ser suficiente para conocer el resultado

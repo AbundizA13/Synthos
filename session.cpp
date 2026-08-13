@@ -1,4 +1,5 @@
 #include "neonexus.h"
+#include "nodes.h"
 #include "messages.h"
 #include <iostream>
 

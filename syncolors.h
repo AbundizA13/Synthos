@@ -3,12 +3,12 @@
 
 #include <string>
 
-#define R Color::texto_base
-#define M Color::menu_marco
-#define P Color::menu_principal
-#define S Color::menu_secundario
-
 using namespace std;
+
+#define R (Color::texto_base)
+#define M (Color::menu_marco)
+#define P (Color::menu_principal)
+#define S (Color::menu_secundario)
 
 namespace Color{
 

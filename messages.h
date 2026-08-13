@@ -27,6 +27,8 @@ namespace Mensaje{
     const string err_nodo_inexistente = tag_error+"Se intentó procesar un nodo inexistente.\n"+R;
     const string err_variable_no_en_mapa = tag_errorInterno+"No se encontró la variable actual en el mapa de valores.\n"+R;
     const string err_operador_desconocido = tag_errorInterno+"Se intentó evaluar un operador desconocido.\n"+R;
+    const string err_funcion_sin_argumento = tag_error+"No se introdujo el argumento necesario en una función.\n"+R;
+    const string err_evaluarAST = tag_errorInterno+"Se detectó un AST vacío.\n\n"+R;
     /*LEXER*/
     string tokens_reconocidos(size_t n);
     string token_individual(int i, const string& contenido);

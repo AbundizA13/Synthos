@@ -6,6 +6,7 @@
 #include <vector>
 #include <unordered_map>
 #include <functional>
+#include <optional>
 using namespace std;
 
 typedef enum tipo_token{
@@ -49,6 +50,14 @@ class Lexer{
         bool esParentesis();
     };
 
+struct Variable{ //Dentro de un mapa que ya contiene el string de la variable
+    //string var;
+    double valor;
+    bool constante;
+    Variable(double val, bool constante)
+        : valor(val), constante(constante){}
+};
+/*
 struct Nodo{
     Nodo* der;
     Nodo* izq;
@@ -58,6 +67,17 @@ struct Nodo{
     Nodo(Token t, Nodo* a, Nodo* b)
         : token(t), izq(a), der(b), padre(nullptr){}
 };
+*/
+struct ContextoEvaluator{
+    unordered_map<string, Variable>& variables;        
+    unordered_map<string, function<double(double)>> funciones;
+
+    ContextoEvaluator(unordered_map<string, Variable>& variables, unordered_map<string, function<double(double)>> funciones)
+        : variables(variables), funciones(funciones){}
+};
+
+class Nodo;
+
 
 class Parser{
     private:
@@ -81,15 +101,6 @@ class Parser{
         
 };
 
-struct Variable{ //Dentro de un mapa que ya contiene el string de la variable
-    //string var;
-    double valor;
-    bool constante;
-    Variable(double val, bool constante)
-        : valor(val), constante(constante){}
-};
-
-
 struct Expresion{
     string original;
     Nodo* raiz;
@@ -109,7 +120,7 @@ class Evaluator{
         unordered_map<string, Variable> variables;
         void escanearVariables();
         void asignarValorVariables();
-        double evaluarAST(Nodo* nodo);
+        optional<double> evaluarAST(Nodo* nodo);
 
 };
 

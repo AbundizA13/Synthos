@@ -1,4 +1,5 @@
 #include "neonexus.h"
+#include "nodes.h"
 #include "syncolors.h"
 #include "messages.h"
 #include "math_functions.h"
@@ -8,6 +9,7 @@
 #include <string>
 #include <stdexcept>
 #include <cmath>
+#include <optional>
 
 using namespace Color;
 using namespace std;
@@ -74,11 +76,17 @@ void Evaluator::asignarValorVariables(){
     }
 }
 
-double Evaluator::evaluarAST(Nodo* nodo){
+optional<double> Evaluator::evaluarAST(Nodo* nodo){
     if(nodo == nullptr){
         cout<<Mensaje::err_nodo_inexistente;
-        return 0.0;
+        return nullopt;
     }
+    ContextoEvaluator contexto(variables,funciones);
+    return nodo->evaluar(contexto);
+
+    //Con eso debería ser suficiente para conocer el resultado
+
+    /*
     token t = nodo->token;
     if(t.tipo == NUM){
         return stod(t.contenido);
@@ -133,6 +141,7 @@ double Evaluator::evaluarAST(Nodo* nodo){
     }
     cout<<Mensaje::err_operador_desconocido;
     return 0.0;
+    */
 }
 
 bool Evaluator::esOperador(token t){

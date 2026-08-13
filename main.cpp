@@ -1,17 +1,17 @@
+#include <windows.h>
+#include <iostream>
+#include <iomanip>
+#include <stdlib.h>
+#include <string>
+#include <cmath>
+
 #include "neonexus.h"
 #include "syncolors.h"
 #include "messages.h"
 #include "commands.h"
 #include "routines.h"
-//#include <stdio.h>
-#include <iostream>
-#include <iomanip>
-#include <stdlib.h>
-#include <windows.h>
-#include <string>
-#include <cmath>
 
-using namespace std;
+
 
 int main(){
     SetConsoleOutputCP(CP_UTF8);    

@@ -1,6 +1,7 @@
 #include "neonexus.h"
 #include "syncolors.h"
 #include "messages.h"
+#include "nodes.h"
 #include <vector>
 #include <iostream>
 
@@ -99,15 +100,19 @@ Nodo* Parser::parsePower(){
 Nodo* Parser::parseFactor(){
     if(indice >= tokens.size()) return nullptr;
     token actual = tokens[indice];
-    if(actualEsTokenPrimario()){ //Tokens primarios sin hijos.
-        Nodo* nuevoNodo = new Nodo(actual,nullptr,nullptr);
+    if(actual.tipo == NUM){
+        Nodo* nuevoNodo = new Nodo_Numero(actual,nullptr,nullptr);
+        avanzar();
+        return nuevoNodo;
+    }else if(actual.tipo == VAR){
+        Nodo* nuevoNodo = new Nodo_Variable(actual,nullptr,nullptr);
         avanzar();
         return nuevoNodo;
     }else if(actual.tipo == RES){ //RESTA UNARIA
         avanzar();
         Nodo* primario = parsePower();
         if(primario == nullptr) return nullptr;
-        Nodo* negacion = new Nodo(actual,nullptr,primario);
+        Nodo* negacion = new Nodo_Operador_Unario(actual,nullptr,primario);
         unirHijos(negacion);
         return negacion;
     }else if(actual.tipo == SUM){ //SUMA UNARIA ignorada.
@@ -138,7 +143,7 @@ Nodo* Parser::parseFactor(){
             return nullptr;
         }
         avanzar();
-        Nodo* funcion = new Nodo(actual,nullptr,argumento);
+        Nodo* funcion = new Nodo_Funcion(actual,nullptr,argumento);
         return funcion;
     }else{
         cout<<Mensaje::err_token_desconocido_parser;
@@ -204,7 +209,7 @@ void Parser::imprimirAST(Nodo* nodo){
 Nodo* Parser::trinodo(Nodo* a, Nodo* b, token op){
     /*Simplemente une los nodos a y b (operandos) 
         con el nodo operador y retorna el nuevo nodo 'a'*/
-    Nodo* c = new Nodo(op, a, b);
+    Nodo* c = new Nodo_Operador(op, a, b);
     unirHijos(c);
     return c;
 }

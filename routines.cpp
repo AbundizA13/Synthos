@@ -1,9 +1,11 @@
 #include "commands.h"
 #include "messages.h"
 #include "neonexus.h"
+#include "nodes.h"
 #include <iostream> 
 #include <iomanip>
 #include <cmath>
+#include <optional>
 
 using namespace std;
 
@@ -85,10 +87,14 @@ void rutinaEvaluarAST(const Expresion& expresion){
     Evaluator evaluator(expresion);
     evaluator.asignarValorVariables();
 
-    double resultado = 0.0;
-
-    resultado = evaluator.evaluarAST(expresion.raiz);
+    //double resultado = 0.0;
+    auto res = evaluator.evaluarAST(expresion.raiz);
+    if(!res.has_value()){
+        cout<<Mensaje::err_evaluarAST;
+        return;
+    }
     cout<<Mensaje::impresion_resultado;
+    double resultado = res.value();
 
     if(abs(resultado) <= 0.00001 && abs(resultado) > 0){
         if(abs(resultado) < 0.000000000001){

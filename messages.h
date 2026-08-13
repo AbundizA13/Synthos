@@ -15,6 +15,7 @@ namespace Mensaje{
     const string tag_advertencia = hl_advertencia1+"\n[ADVERTENCIA] "+hl_advertencia0;
     const string tag_debug = hl_debug1+"\n[DEBUG] "+hl_debug0;
     /*GLOBAL*/
+    string expresiones_registradas(const size_t expresiones);
     const string saliendo = hl_positivo1+"\nSaliendo...\n"+R;
     /*EVALUATOR*/
     const string variables_noEncontradas = hl_positivo1+"\nNo se hallaron variables en la expresión.\n\n"+R;
@@ -35,14 +36,14 @@ namespace Mensaje{
     const string adv_decimal_duplicado = "\n"+tag_advertencia+"Se detectaron +1 puntos decimales en una constante.\n"+R;
     string err_token_desconocido(const char& actual); 
     /*PARSER*/
-    const string impresion_AST = hl_positivo2+"\nImpresión de AST:\n"+R;
+    const string impresion_AST = tag_debug+"Impresión de AST:\n"+R;
     const string err_parentesis_abierto = tag_error+"Sintaxis incorrecta, se esperaba \")\".\n"+R;
     const string err_token_desconocido_parser = tag_errorInterno+"Token desconocido en función \"parseFactor();\".\n"+R;
     const string impresion_token_desconocido = hl_negativo1+"ERR";
     /*INPUT*/
     const string sin_expresiones = tag_error+"Favor de introducir una expresión antes de evaluar."+R;
-    const string pedir_expresion = tag_input+"Dame una expresión para ser reconocida: "+R;
-    const string pedir_nombre_expr = tag_input+"Dame el nombre de la expresión introducida: "+R;
+    const string pedir_expresion = tag_input+"\nDame una expresión para ser reconocida: "+R;
+    const string pedir_nombre_expr = tag_input+"\nDame el nombre de la expresión introducida: "+R;
     const string buscar_expresion = tag_input+"Dame el nombre de la expresión a buscar (Dejar vacío para salir): "+R;
     const string expresion_no_encontrada = tag_error+"No se encontró la expresión introducida.\nPor favor intentar de nuevo.\n\n"+R;
     const string expresion_encontrada = hl_positivo2+"\nSe encontró la expresión.\n\n"+R;
@@ -50,16 +51,24 @@ namespace Mensaje{
     const string preguntar_evaluacion = hl_positivo2+"\n\n¿Desea evaluar la expresión ingresada?\n[1] Sí\t[0] No\n"+R;
     string pedir_valor_variable(const string& nombre);
     /*MENU*/
-    const string pedir_comando = hl_positivo2+"\nIntroducir comando para continuar ('help' para lista de comados): "+R;
+    const string pedir_comando = hl_positivo2+"\nIntroducir comando para continuar ('ayuda' para lista de comados): "+R;
     const string err_rutina_vacia = tag_errorInterno+"Rutina vacía al entrar a CommandParser. \nPor favor, introduce un comando válido.\n\n"+R;
     string err_rutina_desconocida(const string& rutina);
-
-    const string thankyou = hl_positivo2+"\n\nGracias por apoyar a este proyecto :)"+R;
+    const string despliegue_comandos = hl_positivo1+"\n\nMenú de comandos:\n"+R;
+    const vector<string> lista_comandos = {
+        hl_positivo2+"'salir' "+hl_positivo0+"cierra el programa y sus procesos."+R,
+        hl_positivo2+"'expresion' "+hl_positivo0+"captura una expresión y la guarda en la sesión actual."+R,
+        hl_positivo2+"'evaluar' "+hl_positivo0+"evalua una expresión ya capturada en la sesión."+R,
+        hl_positivo2+"'ayuda' "+hl_positivo0+"despliega este menú."+R
+    };
 
     /*DEBUG*/
     string expresiones_agregadas(size_t num);
-    const string debug_sess_expr_agregada = tag_debug+"Se agregó una expresión a la sesión actual";
-    const string argumentos_vacios = hl_positivo1+"\nNo se detectaron argumentos en el comando ingresado.\n"+R;
+    string debug_sess_expr_agregada(const string& expresion, const string& nombre);
+    //const string debug_sess_expr_agregada = tag_debug+"Se agregó una expresión a la sesión actual";
+    const string argumentos_vacios = tag_debug+"No se detectaron argumentos en el comando ingresado."+R;
+
+    const string thankyou = hl_positivo2+"\n\nGracias por apoyar a este proyecto :)"+R;
 }   
 
 #endif

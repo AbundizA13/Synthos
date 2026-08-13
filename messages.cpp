@@ -6,6 +6,7 @@
 
 
 using namespace std;
+using namespace Mensaje;;
 
 void esperarENTER(){ //Agregar cin.ignore() antes de la función, en caso de tener '\n' en el buffer
     cout << Mensaje::esperando_enter;
@@ -38,11 +39,11 @@ int preguntarEvaluacion(){
 }
 
 string Mensaje::variables_encontradas(int n){
-    return hl_positivo1+"\nSe detectaron "+to_string(n)+" variables en la expresión.\n\n"+R;
+    return tag_debug+"Se detectaron "+to_string(n)+" variables en la expresión.\n"+R;
 }
 
 string Mensaje::tokens_reconocidos(size_t n){
-    return hl_positivo2+"Tokens reconocidos ("+to_string(n)+"):\n"+R;
+    return tag_debug+"Tokens reconocidos ("+to_string(n)+"):\n"+R;
 }
 
 string Mensaje::token_individual(int i, const string& contenido){
@@ -62,8 +63,21 @@ string Mensaje::err_rutina_desconocida(const string& rutina){
 }
 
 string Mensaje::expresiones_agregadas(size_t num){
-    return tag_debug+"Se detectaron "+std::to_string(num)+" expresiones.\n"+R;
+    return tag_debug+"Se detectaron "+std::to_string(num)+" expresion(es).\n"+R;
 }
+
+/*
+    <"2+x^3" , "A1">
+    (A1): 2+x^3
+*/
+string Mensaje::debug_sess_expr_agregada(const string& expresion, const string& nombre){
+    return tag_debug+"Se agregó una expresión a la sesión actual. \n("+nombre+"): "+expresion+"\n"+R;
+}
+
+string Mensaje::expresiones_registradas(const size_t expresiones){
+    return hl_positivo2+"Se han registrado ("+to_string(expresiones)+") expresion(es).\n";
+}
+
 
 /*
 void debug_imprimirValorVariables(unordered_map<string,Variable>& variables){

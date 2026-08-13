@@ -22,5 +22,5 @@ void Session::eliminar_AST(Nodo* nodo){
 
 void Session::agregarExpr(const string& nombre, const Expresion& expresion){
     expresiones.emplace(nombre, expresion);
-    cout<<Mensaje::debug_sess_expr_agregada;
+    cout<<Mensaje::debug_sess_expr_agregada(expresion.original, nombre);
 }

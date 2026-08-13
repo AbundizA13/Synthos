@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include <cmath>
+#include <optional>
 
 #include "neonexus.h"
 #include "syncolors.h"
@@ -11,6 +12,7 @@
 #include "commands.h"
 #include "routines.h"
 
+using namespace std;
 
 
 int main(){
@@ -29,6 +31,10 @@ int main(){
     
     //RUTINA PRINCIPAL MENU Y PETICIÓN DE RUTINA SECUNDARIA
     while(ejecutando){
+        auto& expresionesRef = session.expresiones;
+        if(!expresionesRef.empty()){
+            cout << Mensaje::expresiones_agregadas(expresionesRef.size());
+        }
         //Struct Command Invocation contiene información para la ejecución del próximo paso
         Command_Invocation invocacion = RUTINA_MENU(); 
         /* RUTINA_MENU es una función aislada que ejecuta
@@ -38,22 +44,57 @@ int main(){
         rutinasPrincipales rutina = invocacion.rutina;
         if(rutina == rutinasPrincipales::expresion){
             Expresion nueva = rutinaExpresion(invocacion);
+            /*
+            if(invocacion.argumentos.empty()){
+                nueva = rutinaExpresion(invocacion);
+            }else{
+                nueva = rutinaExpresionExpress(invocacion);
+            }*/
             cout<<Mensaje::pedir_nombre_expr;
             string nombre;
             getline(cin, nombre);
             session.agregarExpr(nombre, nueva);
+            esperarENTER();
+    
+            system("cls");
+            imprimirLogo();
         }else if(rutina == rutinasPrincipales::salir){
             ejecutando = false;
         }else if(rutina == rutinasPrincipales::evaluar){
             //Hacer alguna validación en caso de no tener expresiones.
-            if(session.expresiones.empty()){
+            if(expresionesRef.empty()){
                 cout<<Mensaje::sin_expresiones;
                 continue;
             }
             Expresion actual;
-            requerirExpresion(session.expresiones, actual);
+            
+            auto& argumentosRef = invocacion.argumentos;
+            
+            if(!invocacion.argumentos.empty()){
+                auto expresionActual = encontrarExpresion(argumentosRef[0], expresionesRef);
+                if(!expresionActual.has_value()){
+                    requerirExpresion(expresionesRef, actual);
+                }else{
+                    actual = expresionActual.value();
+                }
+            }else{
+                requerirExpresion(expresionesRef, actual);
+            }
+
+
+            
             if(actual.raiz == nullptr) continue; //Devuelve al principio del menu
             rutinaEvaluarAST(actual); /*SE DEBE CONOCER LA FUNCION A EVALUAR DEL MAPA DE SESSION ()*/
+            
+            esperarENTER();
+            system("cls");
+            imprimirLogo();
+        }else if(rutina == rutinasPrincipales::ayuda){
+            cout << Mensaje::despliegue_comandos;
+            for(auto comando : Mensaje::lista_comandos){
+                cout << comando<<"\n";
+            }
+
         }
             /*    break;
 

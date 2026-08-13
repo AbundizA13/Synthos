@@ -140,6 +140,7 @@ class Session{ //Se encarga de almacenar varios AST, mapa de va
 void imprimirLogo();
 void esperarENTER();
 int preguntarEvaluacion();
+optional<Expresion> encontrarExpresion(const string& nombre, unordered_map<string, Expresion>& expresiones);
 
 
 

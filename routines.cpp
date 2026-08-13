@@ -9,15 +9,21 @@
 
 using namespace std;
 
+
+
 Expresion rutinaExpresion(const Command_Invocation& invocacion){    
     //Procesar expresión como AST y retornar estructura Expresión lista
     Expresion actual;
-
-    cout << Mensaje::pedir_expresion;
     string expresion;
-    getline(cin, expresion);
-        actual.original = expresion;
 
+    auto argumentos = invocacion.argumentos;
+    if(argumentos.empty()){
+        cout << Mensaje::pedir_expresion;
+        getline(cin, expresion);
+    }else{
+        expresion = argumentos[0]; //Se toma solo el primer argumento como expresión
+    }
+    actual.original = expresion;
     Lexer lexer(expresion); //Clase lexer con input como parámetro
     vector<token> tokens; //Vector de tokens
     tokens = lexer.tokenizar(); //Lexer devuelve vector de tokens relleno.
@@ -49,13 +55,14 @@ Expresion rutinaExpresion(const Command_Invocation& invocacion){
     }
 
     //Se asume que "raiz" no es nullptr, arreglar esto si aparece otro comportamiento.  
-    esperarENTER();
+    //esperarENTER();
     return actual;
 }
 
 void requerirExpresion(unordered_map<string, Expresion>& expresiones, Expresion& actual){
     /*SE DEBE AJUSTAR STRUCT EXPRESION Y DARLE UN NOMBRE A LAS EXPRESIONES
     PARA PODER PEDIR NOMBRE DE EXPRESIÓN Y NO EL INPUT ENTERO*/
+
     size_t num_expresiones = expresiones.size();
     cout<<Mensaje::expresiones_agregadas(num_expresiones);
     string nombre;
@@ -69,18 +76,23 @@ void requerirExpresion(unordered_map<string, Expresion>& expresiones, Expresion&
         }
         
         //Verificar si la expresión está en el mapa de expresiones
-        auto iterador = expresiones.find(nombre);
-        if(iterador == expresiones.end()){ //No se encontró la expresión
-            cout<<Mensaje::expresion_no_encontrada;
-            continue; //Seguir intentando
+        auto encontrada = encontrarExpresion(nombre, expresiones);
+        if(!encontrada.has_value()){
+            continue;
         }
-        cout<<Mensaje::expresion_encontrada;
-        actual = iterador->second;
+        actual = encontrada.value();
         return;
     }
-    
+}
 
-
+optional<Expresion> encontrarExpresion(const string& nombre, unordered_map<string, Expresion>& expresiones){
+    auto iterador = expresiones.find(nombre);
+    if(iterador == expresiones.end()){
+        cout<<Mensaje::expresion_no_encontrada;
+        return nullopt; //Seguir intentando
+    }
+        cout<<Mensaje::expresion_encontrada;
+        return iterador->second;
 }
 
 void rutinaEvaluarAST(const Expresion& expresion){

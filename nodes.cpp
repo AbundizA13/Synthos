@@ -6,6 +6,10 @@
 
 using namespace std;
 
+void destruirNodo(Nodo* nodo){
+    delete nodo;
+}
+
 double Nodo_Numero::evaluar(ContextoEvaluator& contexto){
     return stod(token.contenido);
 }

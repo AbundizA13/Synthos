@@ -25,7 +25,7 @@ Evaluator::Evaluator(vector<token> tokens):
     //this->indice = 0;
 
 Evaluator::Evaluator(const Expresion& expresion):
-    funciones(obtenerFuncionesMatematicas()), raiz(expresion.raiz), variables(expresion.variables)
+    funciones(obtenerFuncionesMatematicas()), raiz(expresion.raiz.get()), variables(expresion.variables)
     {}
     
 

@@ -15,16 +15,12 @@
 
 using namespace Color;
 
-Parser::Parser(vector<token> tokens){
-    this->tokens = std::move(tokens);
-    this->indice = 0;
-    this->raiz = nullptr;
-}
+Parser::Parser(vector<token> tokens)
+    : tokens(std::move(tokens)), indice(0), raiz(nullptr, &destruirNodo)
+{}
 
 Parser::~Parser(){ //Destructor que libera el AST completo
-    //no liberar aquí, session es responsable de limpiar los nodos
-    //liberarAST(this->raiz);
-    this->raiz = nullptr;
+    this->raiz.reset();
 }
 
 /*
@@ -54,11 +50,11 @@ Nodo* Parser::parseExpression(){
             break;
         }
         default: 
-            this->raiz = a;
+            this->raiz.reset(a);
             return a;
         }
     }
-    this->raiz = a;
+    this->raiz.reset(a);
     return a;
 }
 Nodo* Parser::parseTerm(){

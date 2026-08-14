@@ -53,7 +53,7 @@ int main(){
             cout<<Mensaje::pedir_nombre_expr;
             string nombre;
             getline(cin, nombre);
-            session.agregarExpr(nombre, nueva);
+            session.agregarExpr(nombre, std::move(nueva));
             esperarENTER();
     
             system("cls");
@@ -66,16 +66,14 @@ int main(){
                 cout<<Mensaje::sin_expresiones;
                 continue;
             }
-            Expresion actual;
+            Expresion* actual = nullptr;
             
             auto& argumentosRef = invocacion.argumentos;
             
             if(!invocacion.argumentos.empty()){
-                auto expresionActual = encontrarExpresion(argumentosRef[0], expresionesRef);
-                if(!expresionActual.has_value()){
+                actual = encontrarExpresion(argumentosRef[0], expresionesRef);
+                if(actual == nullptr){
                     requerirExpresion(expresionesRef, actual);
-                }else{
-                    actual = expresionActual.value();
                 }
             }else{
                 requerirExpresion(expresionesRef, actual);
@@ -83,8 +81,8 @@ int main(){
 
 
             
-            if(actual.raiz == nullptr) continue; //Devuelve al principio del menu
-            rutinaEvaluarAST(actual); /*SE DEBE CONOCER LA FUNCION A EVALUAR DEL MAPA DE SESSION ()*/
+            if(actual == nullptr || actual->raiz == nullptr) continue; //Devuelve al principio del menu
+            rutinaEvaluarAST(*actual); /*SE DEBE CONOCER LA FUNCION A EVALUAR DEL MAPA DE SESSION ()*/
             
             esperarENTER();
             system("cls");

@@ -46,8 +46,8 @@ Expresion rutinaExpresion(const Command_Invocation& invocacion){
 
     Parser parser(tokens); //Recibe lista de tokens;
     parser.parseExpression();
-    Nodo* raiz = parser.raiz;
-    actual.raiz = raiz;
+    Nodo* raiz = parser.raiz.get();
+    actual.raiz = std::move(parser.raiz);
 
     if(raiz != nullptr){
             cout<<Mensaje::impresion_AST;
@@ -59,7 +59,7 @@ Expresion rutinaExpresion(const Command_Invocation& invocacion){
     return actual;
 }
 
-void requerirExpresion(unordered_map<string, Expresion>& expresiones, Expresion& actual){
+void requerirExpresion(unordered_map<string, unique_ptr<Expresion>>& expresiones, Expresion*& actual){
     /*SE DEBE AJUSTAR STRUCT EXPRESION Y DARLE UN NOMBRE A LAS EXPRESIONES
     PARA PODER PEDIR NOMBRE DE EXPRESIÓN Y NO EL INPUT ENTERO*/
 
@@ -70,29 +70,29 @@ void requerirExpresion(unordered_map<string, Expresion>& expresiones, Expresion&
         cout<<Mensaje::buscar_expresion;
         getline(cin, nombre);
         if(nombre.empty()){
-            actual.raiz = nullptr;
+            actual = nullptr;
             cout<<Mensaje::saliendo;
             return;
         }
         
         //Verificar si la expresión está en el mapa de expresiones
-        auto encontrada = encontrarExpresion(nombre, expresiones);
-        if(!encontrada.has_value()){
+        auto* encontrada = encontrarExpresion(nombre, expresiones);
+        if(encontrada == nullptr){
             continue;
         }
-        actual = encontrada.value();
+        actual = encontrada;
         return;
     }
 }
 
-optional<Expresion> encontrarExpresion(const string& nombre, unordered_map<string, Expresion>& expresiones){
+Expresion* encontrarExpresion(const string& nombre, unordered_map<string, unique_ptr<Expresion>>& expresiones){
     auto iterador = expresiones.find(nombre);
     if(iterador == expresiones.end()){
         cout<<Mensaje::expresion_no_encontrada;
-        return nullopt; //Seguir intentando
+        return nullptr; //Seguir intentando
     }
         cout<<Mensaje::expresion_encontrada;
-        return iterador->second;
+        return iterador->second.get();
 }
 
 void rutinaEvaluarAST(const Expresion& expresion){
@@ -101,7 +101,7 @@ void rutinaEvaluarAST(const Expresion& expresion){
 
     //double resultado = 0.0;
     ContextoEvaluator contexto(evaluator.variables, evaluator.funciones);
-    auto res = evaluator.evaluarAST(expresion.raiz, contexto);
+    auto res = evaluator.evaluarAST(expresion.raiz.get(), contexto);
     if(!res.has_value()){
         cout<<Mensaje::err_evaluarAST;
         return;

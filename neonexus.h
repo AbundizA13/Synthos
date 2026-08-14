@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <functional>
 #include <optional>
+#include <memory>
 using namespace std;
 
 typedef enum tipo_token{
@@ -78,6 +79,8 @@ struct ContextoEvaluator{
 
 class Nodo;
 
+void destruirNodo(Nodo* nodo);
+using NodoPtr = unique_ptr<Nodo, void(*)(Nodo*)>;
 
 class Parser{
     private:
@@ -93,7 +96,7 @@ class Parser{
         void unirHijos(Nodo* padre);
         void liberarAST(Nodo* nodo);
     public:
-        Nodo* raiz;
+        NodoPtr raiz;
         Parser(vector<token> tokens);
         ~Parser(); //DESTRUCTOR
         Nodo* parseExpression();
@@ -103,8 +106,14 @@ class Parser{
 
 struct Expresion{
     string original;
-    Nodo* raiz;
+    NodoPtr raiz;
     unordered_map<string, Variable> variables;
+    Expresion()
+        : raiz(nullptr, &destruirNodo) {}
+    Expresion(const Expresion&) = delete;
+    Expresion& operator=(const Expresion&) = delete;
+    Expresion(Expresion&&) = default;
+    Expresion& operator=(Expresion&&) = default;
 };
 
 class Evaluator{
@@ -125,11 +134,11 @@ class Evaluator{
 };
 
 class Session{ //Se encarga de almacenar varios AST, mapa de va
-    private:
-        void eliminar_AST(Nodo* nodo);
+    
     public:
-        unordered_map<string, Expresion> expresiones;
-        void agregarExpr(const string& nombre, const Expresion& expresion);
+        unordered_map<string, unique_ptr<Expresion>> expresiones;
+        void agregarExpr(const string& nombre, Expresion expresion);
+        void loopPrincipal();
         ~Session();
 };
 
@@ -140,7 +149,7 @@ class Session{ //Se encarga de almacenar varios AST, mapa de va
 void imprimirLogo();
 void esperarENTER();
 int preguntarEvaluacion();
-optional<Expresion> encontrarExpresion(const string& nombre, unordered_map<string, Expresion>& expresiones);
+Expresion* encontrarExpresion(const string& nombre, unordered_map<string, unique_ptr<Expresion>>& expresiones);
 
 
 

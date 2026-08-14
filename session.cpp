@@ -5,22 +5,14 @@
 
 using namespace std;
 
-Session::~Session(){
-    for(auto& expresion : expresiones){
-        eliminar_AST(expresion.second.raiz);
-    }
-}
+Session::~Session() = default;
 
-void Session::eliminar_AST(Nodo* nodo){
-    if(nodo == nullptr){
-        return;
-    }
-    eliminar_AST(nodo->izq);
-    eliminar_AST(nodo->der);
-    delete nodo;
-}
-
-void Session::agregarExpr(const string& nombre, const Expresion& expresion){
-    expresiones.emplace(nombre, expresion);
+void Session::agregarExpr(const string& nombre, Expresion expresion){
+    auto expr = make_unique<Expresion>(std::move(expresion));
+    expresiones.emplace(nombre, std::move(expr));
     cout<<Mensaje::debug_sess_expr_agregada(expresion.original, nombre);
+}
+
+void Session::loopPrincipal(){
+    
 }
